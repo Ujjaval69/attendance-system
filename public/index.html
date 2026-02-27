@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Smart Attendance</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav class="navbar">
+    <h2>Smart Attendance</h2>
+</nav>
+
+<div class="hero">
+    <h1>Attendance Management System</h1>
+    <p>Simple, fast and efficient attendance tracking</p>
+</div>
+
+<div class="container">
+
+    <div class="card">
+        <h2>Add Attendance</h2>
+
+        <form id="form">
+            <input type="text" id="name" placeholder="Student Name" required>
+            <input type="text" id="subject" placeholder="Subject" required>
+
+            <select id="status">
+                <option value="Present">Present</option>
+                <option value="Absent">Absent</option>
+            </select>
+
+            <input type="date" id="date" required>
+
+            <button>Add</button>
+        </form>
+    </div>
+
+    <div class="card">
+        <h2>Attendance Records</h2>
+        <ul id="list"></ul>
+    </div>
+
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
