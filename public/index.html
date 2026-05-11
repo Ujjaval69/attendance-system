@@ -1,44 +1,73 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Smart Attendance</title>
-    <link rel="stylesheet" href="style.css">
+  <title>Dashboard</title>
+  <link rel="stylesheet" href="style.css">
+  
 </head>
+
 <body>
+  <div class="particles"></div>
 
-<nav class="navbar">
-    <h2>Smart Attendance</h2>
-</nav>
+<div class="navbar">
+  <h2>🎓 Smart Attendance</h2>
 
-<div class="hero">
-    <h1>Attendance Management System</h1>
-    <p>Simple, fast and efficient attendance tracking</p>
+  <div class="nav-right">
+    <span id="userInfo"></span>
+    <button onclick="toggleTheme()">🌙</button>
+    <button onclick="logout()">Logout</button>
+  </div>
 </div>
 
-<div class="container">
+<div class="dashboard">
 
-    <div class="card">
-        <h2>Add Attendance</h2>
+  <!-- LEFT PANEL -->
+  <div class="left">
 
-        <form id="form">
-            <input type="text" id="name" placeholder="Student Name" required>
-            <input type="text" id="subject" placeholder="Subject" required>
+    <div class="card animate">
+      <h3>➕ Add Attendance</h3>
 
-            <select id="status">
-                <option value="Present">Present</option>
-                <option value="Absent">Absent</option>
-            </select>
+      <input id="name" placeholder="Student Name">
+      <input id="subject" placeholder="Subject">
 
-            <input type="date" id="date" required>
+      <select id="status">
+        <option>Present</option>
+        <option>Absent</option>
+      </select>
 
-            <button>Add</button>
-        </form>
+      <button onclick="addAttendance()">Add</button>
     </div>
 
-    <div class="card">
-        <h2>Attendance Records</h2>
-        <ul id="list"></ul>
+    <div class="card animate">
+      <h3>📊 Stats</h3>
+      <p>Total: <span id="total">0</span></p>
+      <p>Present: <span id="present">0</span></p>
+      <p>Attendance: <span id="percent">0%</span></p>
     </div>
+
+  </div>
+
+  <!-- RIGHT -->
+  <div class="card big animate">
+
+    <h3>📋 Attendance Records</h3>
+
+    <div class="filters">
+      <input id="search" placeholder="Search...">
+      <button onclick="searchAttendance()">Search</button>
+
+      <select id="filterStatus">
+        <option value="">All</option>
+        <option>Present</option>
+        <option>Absent</option>
+      </select>
+
+      <button onclick="filterAttendance()">Filter</button>
+    </div>
+
+    <ul id="list"></ul>
+
+  </div>
 
 </div>
 

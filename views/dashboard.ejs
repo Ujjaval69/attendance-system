@@ -1,0 +1,7 @@
+<h2>Server Rendered Dashboard</h2>
+
+<ul>
+  <% data.forEach(d => { %>
+    <li><%= d.name %> - <%= d.subject %> - <%= d.status %></li>
+  <% }) %>
+</ul>

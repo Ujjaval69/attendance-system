@@ -1,37 +1,26 @@
-const express = require("express");
+const express = require('express');
 const router = express.Router();
-const fs = require("fs");
+const Attendance = require('../models/Attendance');
+const auth = require('../middleware/authMiddleware');
 
-const file = "./data/attendance.json";
-
-function readData(){
-    try{
-        return JSON.parse(fs.readFileSync(file));
-    }catch{
-        return [];
-    }
-}
-
-function writeData(data){
-    fs.writeFileSync(file, JSON.stringify(data,null,2));
-}
-
-router.get("/", (req,res)=>{
-    res.json(readData());
+router.get('/', auth, async (req, res) => {
+  const data = await Attendance.find();
+  res.json(data);
 });
 
-router.post("/", (req,res)=>{
-    const data = readData();
+router.post('/', auth, async (req, res) => {
+  const data = await Attendance.create(req.body);
+  res.json(data);
+});
 
-    data.push({
-        name:req.body.name,
-        subject:req.body.subject,
-        status:req.body.status,
-        date:req.body.date
-    });
+router.put('/:id', auth, async (req, res) => {
+  const updated = await Attendance.findByIdAndUpdate(req.params.id, req.body, { new: true });
+  res.json(updated);
+});
 
-    writeData(data);
-    res.send("Attendance added");
+router.delete('/:id', auth, async (req, res) => {
+  await Attendance.findByIdAndDelete(req.params.id);
+  res.json({ message: "Deleted" });
 });
 
 module.exports = router;

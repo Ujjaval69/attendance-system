@@ -1,6 +1,4 @@
-const logger = (req,res,next)=>{
-    console.log(`[${new Date().toLocaleTimeString()}] ${req.method} ${req.url}`);
-    next();
-}
-
-module.exports = logger;
+module.exports = (req, res, next) => {
+  console.log(`${req.method} ${req.url}`);
+  next();
+};
