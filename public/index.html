@@ -1,76 +1,638 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Dashboard</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Smart Attendance - Next Gen Attendance Tracking</title>
   <link rel="stylesheet" href="style.css">
-  
+  <style>
+    /* Landing-specific layouts to coordinate with Alabaster Editorial Design */
+    .landing-header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      background: rgba(246, 245, 240, 0.85);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--glass-border);
+      z-index: 1000;
+      padding: 18px 0;
+    }
+    
+    body.dark-mode .landing-header {
+      background: rgba(10, 10, 12, 0.85);
+    }
+    
+    .landing-nav-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .landing-logo {
+      font-size: 22px;
+      font-weight: 800;
+      color: var(--accent-primary);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    
+    .landing-nav-links {
+      display: flex;
+      gap: 30px;
+      align-items: center;
+    }
+    
+    @media (max-width: 768px) {
+      .landing-nav-links {
+        display: none;
+      }
+    }
+    
+    .landing-nav-link {
+      font-weight: 500;
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-size: 15px;
+      transition: var(--transition-smooth);
+    }
+    
+    .landing-nav-link:hover {
+      color: var(--accent-primary);
+    }
+    
+    .landing-nav-ctas {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+    
+    /* Hero Layout */
+    .hero-section {
+      max-width: 1200px;
+      margin: 160px auto 80px auto;
+      padding: 0 24px;
+      text-align: center;
+      position: relative;
+    }
+    
+    .hero-tag {
+      display: inline-block;
+      padding: 6px 16px;
+      border-radius: 9999px;
+      background: var(--accent-primary-glow);
+      color: var(--accent-primary);
+      font-weight: 600;
+      font-size: 13px;
+      margin-bottom: 20px;
+      border: 1px solid var(--glass-border);
+    }
+    
+    .hero-title {
+      font-size: 64px;
+      font-weight: 800;
+      letter-spacing: -1.5px;
+      line-height: 1.1;
+      color: var(--text-primary);
+      margin-bottom: 25px;
+    }
+    
+    @media (max-width: 768px) {
+      .hero-title {
+        font-size: 42px;
+      }
+    }
+    
+    .hero-subtitle {
+      font-size: 20px;
+      color: var(--text-secondary);
+      max-width: 700px;
+      margin: 0 auto 40px auto;
+      line-height: 1.6;
+    }
+    
+    .hero-actions {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      margin-bottom: 60px;
+    }
+    
+    .hero-primary-btn {
+      font-family: var(--font-sans);
+      background: var(--accent-primary);
+      color: #ffffff;
+      border: none;
+      padding: 16px 36px;
+      border-radius: var(--radius-md);
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+      box-shadow: 0 8px 30px var(--accent-primary-glow);
+      transition: var(--transition-bounce);
+    }
+    
+    .hero-primary-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 35px var(--accent-primary-glow);
+    }
+    
+    .hero-secondary-btn {
+      font-family: var(--font-sans);
+      background: var(--bg-secondary);
+      color: var(--text-primary);
+      border: 1px solid var(--glass-border);
+      padding: 16px 36px;
+      border-radius: var(--radius-md);
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+      transition: var(--transition-smooth);
+      box-shadow: var(--glass-shadow);
+    }
+    
+    .hero-secondary-btn:hover {
+      background: rgba(0, 0, 0, 0.02);
+      transform: translateY(-2px);
+    }
+    
+    body.dark-mode .hero-secondary-btn:hover {
+      background: rgba(255, 255, 255, 0.04);
+    }
+    
+    /* Mock Dashboard Visual Card */
+    .dashboard-preview-card {
+      max-width: 1000px;
+      margin: 0 auto;
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--glass-border);
+      background: var(--glass-bg);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.05);
+      padding: 10px;
+      transform-style: preserve-3d;
+      will-change: transform;
+      transition: transform 0.15s ease-out;
+    }
+    
+    .dashboard-preview-card img {
+      width: 100%;
+      border-radius: var(--radius-md);
+      display: block;
+    }
+    
+    /* Features Grid */
+    .features-section {
+      max-width: 1200px;
+      margin: 100px auto;
+      padding: 0 24px;
+    }
+    
+    .features-title-container {
+      text-align: center;
+      margin-bottom: 60px;
+    }
+    
+    .features-title {
+      font-size: 38px;
+      font-weight: 800;
+      letter-spacing: -0.8px;
+      margin-bottom: 15px;
+    }
+    
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 30px;
+    }
+    
+    .feature-card {
+      padding: 40px 30px;
+      text-align: left;
+    }
+    
+    .feature-icon {
+      font-size: 32px;
+      width: 60px;
+      height: 60px;
+      border-radius: var(--radius-md);
+      background: var(--accent-primary-glow);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 25px;
+      color: var(--accent-primary);
+      border: 1px solid var(--glass-border);
+    }
+    
+    .feature-name {
+      font-size: 20px;
+      font-weight: 700;
+      margin-bottom: 12px;
+      color: var(--text-primary);
+    }
+    
+    .feature-desc {
+      font-size: 15px;
+      line-height: 1.6;
+      color: var(--text-secondary);
+    }
+    
+    /* Footer */
+    .landing-footer {
+      border-top: 1px solid var(--glass-border);
+      padding: 40px 24px;
+      text-align: center;
+      font-size: 14px;
+      color: var(--text-muted);
+      margin-top: 120px;
+    }
+
+    /* FAQ Accordion */
+    .faq-accordion-item {
+      padding: 0 !important;
+      overflow: hidden;
+      cursor: pointer;
+      transition: var(--transition-smooth);
+    }
+    
+    .faq-accordion-header {
+      padding: 22px 30px;
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--text-primary);
+      user-select: none;
+      outline: none;
+      list-style: none;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .faq-accordion-header::-webkit-details-marker {
+      display: none;
+    }
+    
+    .faq-accordion-header::after {
+      content: "＋";
+      font-size: 16px;
+      color: var(--accent-primary);
+      transition: transform 0.3s ease;
+    }
+    
+    details[open] .faq-accordion-header::after {
+      content: "－";
+    }
+    
+    .faq-accordion-body {
+      padding: 0 30px 22px 30px;
+      font-size: 15px;
+      line-height: 1.6;
+      color: var(--text-secondary);
+      cursor: default;
+    }
+
+    /* Scroll Fade-In */
+    .fade-in-on-scroll {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+    }
+    
+    .fade-in-on-scroll.appear {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
 </head>
-
 <body>
-  <div class="particles"></div>
 
-<div class="navbar">
-  <h2>🎓 Smart Attendance</h2>
+  <!-- NAVBAR -->
+  <header class="landing-header">
+    <div class="landing-nav-container">
+      <a href="#" class="landing-logo">🎓 Smart Attendance</a>
+      
+      <div class="landing-nav-links">
+        <a href="#features" class="landing-nav-link">Features</a>
+        <a href="#security" class="landing-nav-link">Security</a>
+        <a href="#faq" class="landing-nav-link">FAQ</a>
+      </div>
+      
+      <div class="landing-nav-ctas">
+        <a href="login.html" class="hero-secondary-btn" style="padding: 10px 20px; font-size: 14px; border-radius: var(--radius-sm);">Sign In</a>
+        <a href="signup.html" class="hero-primary-btn" style="padding: 10px 20px; font-size: 14px; border-radius: var(--radius-sm);">Get Started</a>
+        <button class="theme-toggle-btn" onclick="toggleTheme()" style="margin-left: 5px;">🌙</button>
+      </div>
+    </div>
+  </header>
 
-  <div class="nav-right">
-    <span id="userInfo"></span>
-    <button onclick="toggleTheme()">🌙</button>
-    <button onclick="logout()">Logout</button>
-  </div>
-</div>
+  <!-- HERO SECTION -->
+  <section class="hero-section">
+    <div class="hero-tag">✨ Next-Generation Tracking Suite</div>
+    <h1 class="hero-title">Beautiful attendance tracking<br>made incredibly simple.</h1>
+    <p class="hero-subtitle">
+      Automate subject-wise attendance logs, visualize trends with interactive 3D panels, and identify at-risk students before final exams. Clean, robust, and secure.
+    </p>
+    <div class="hero-actions">
+      <a href="signup.html" class="hero-primary-btn">Start Tracking For Free</a>
+      <a href="login.html" class="hero-secondary-btn">Sign In to Dashboard</a>
+    </div>
+    
+    <!-- Premium 3D Preview Widget (Glassmorphic Mockup) -->
+    <div class="dashboard-preview-card glass-panel" id="previewCard">
+      <div style="background: rgba(0, 0, 0, 0.02); padding: 40px; border-radius: var(--radius-md); display: flex; flex-direction: column; gap: 20px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--glass-border); padding-bottom: 15px;">
+          <div style="display: flex; gap: 6px;">
+            <span style="width: 10px; height: 10px; background: #ff5f56; border-radius: 50%;"></span>
+            <span style="width: 10px; height: 10px; background: #ffbd2e; border-radius: 50%;"></span>
+            <span style="width: 10px; height: 10px; background: #27c93f; border-radius: 50%;"></span>
+          </div>
+          <span style="font-size: 12px; color: var(--text-muted); font-weight: 500;">preview_dashboard_analytics.io</span>
+        </div>
+        
+        <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; text-align: left;">
+          <div style="padding: 20px; border-radius: var(--radius-md); background: rgba(0,0,0,0.01); border: 1px solid var(--glass-border);">
+            <span style="font-size: 11px; color: var(--text-muted); text-transform: uppercase;">Total Records</span>
+            <div style="font-size: 28px; font-weight: 800; margin-top: 5px; color: var(--accent-primary); transition: transform 0.2s ease; display: inline-block;" id="mockTotal">124</div>
+          </div>
+          <div style="padding: 20px; border-radius: var(--radius-md); background: rgba(0,0,0,0.01); border: 1px solid var(--glass-border);">
+            <span style="font-size: 11px; color: var(--text-muted); text-transform: uppercase;">Overall Rate</span>
+            <div style="font-size: 28px; font-weight: 800; margin-top: 5px; color: #2d8a6b; transition: transform 0.2s ease; display: inline-block;" id="mockRate">89.4%</div>
+          </div>
+          <div style="padding: 20px; border-radius: var(--radius-md); background: rgba(0,0,0,0.01); border: 1px solid var(--glass-border);">
+            <span style="font-size: 11px; color: var(--text-muted); text-transform: uppercase;">At-Risk Alerts</span>
+            <div style="font-size: 28px; font-weight: 800; margin-top: 5px; color: #b93c3c; transition: transform 0.2s ease; display: inline-block;" id="mockRisk">2</div>
+          </div>
+          <div style="padding: 20px; border-radius: var(--radius-md); background: rgba(0,0,0,0.01); border: 1px solid var(--glass-border);">
+            <span style="font-size: 11px; color: var(--text-muted); text-transform: uppercase;">Pending Logs</span>
+            <div style="font-size: 28px; font-weight: 800; margin-top: 5px; color: #c9883b;">0</div>
+          </div>
+        </div>
+        <div style="text-align: center; margin-top: 10px;">
+          <button class="hero-primary-btn" style="padding: 10px 20px; font-size: 13px; border-radius: var(--radius-sm); border: none;" onclick="runLandingDemo(event)">⚡ Simulate Live Log</button>
+        </div>
+      </div>
+    </div>
+  </section>
 
-<div class="dashboard">
+  <!-- FEATURES -->
+  <section class="features-section" id="features">
+    <div class="features-title-container">
+      <h2 class="features-title">Engineered to elevate academic administration.</h2>
+      <p style="color: var(--text-secondary); max-width: 600px; margin: 0 auto;">Everything you need to secure student compliance and log progress seamlessly.</p>
+    </div>
+    
+    <div class="features-grid">
+      <div class="feature-card glass-panel">
+        <div class="feature-icon">🛡️</div>
+        <h4 class="feature-name">Secure Invitation Portals</h4>
+        <p class="feature-desc">Prevents students from self-escalating permissions using invite secret token checkgates during registrations.</p>
+      </div>
+      
+      <div class="feature-card glass-panel">
+        <div class="feature-icon">📅</div>
+        <h4 class="feature-name">30-Day Contribution Heatmap</h4>
+        <p class="feature-desc">Visual daily activity matrix colored according to status (Present, Absent, Late) across the past month.</p>
+      </div>
+      
+      <div class="feature-card glass-panel">
+        <div class="feature-icon">📊</div>
+        <h4 class="feature-name">Dynamic Charting & Insights</h4>
+        <p class="feature-desc">Real-time statistics compilation mapping subject breakdowns and attendance rates automatically.</p>
+      </div>
+      
+      <div class="feature-card glass-panel">
+        <div class="feature-icon">⚠️</div>
+        <h4 class="feature-name">At-Risk Alerts Card</h4>
+        <p class="feature-desc">Auto-surface student files whose global attendance rates track below the exam limit (75% threshold).</p>
+      </div>
 
-  <!-- LEFT PANEL -->
-  <div class="left">
+      <div class="feature-card glass-panel">
+        <div class="feature-icon">📥</div>
+        <h4 class="feature-name">Filterable CSV Export</h4>
+        <p class="feature-desc">Export current table searches and matching query lines into standard CSV files in a single click.</p>
+      </div>
 
-    <div class="card animate">
-      <h3>➕ Add Attendance</h3>
+      <div class="feature-card glass-panel">
+        <div class="feature-icon">🔮</div>
+        <h4 class="feature-name">Premium 3D Hover Tilt</h4>
+        <p class="feature-desc">Every card reacts dynamically to mouse coordinates with hardware-accelerated 3D parallax shifts.</p>
+      </div>
+    </div>
+  </section>
 
-      <input id="name" placeholder="Student Name">
-      <input id="subject" placeholder="Subject">
-
-      <select id="status">
-        <option>Present</option>
-        <option>Absent</option>
-      </select>
-
-      <button onclick="addAttendance()">Add</button>
+  <!-- SECURITY SECTION -->
+  <section class="features-section" id="security" style="margin-top: 150px;">
+    <div class="features-title-container">
+      <div class="hero-tag">🔒 Robust Authentication</div>
+      <h2 class="features-title">Enterprise Security Protocols</h2>
+      <p style="color: var(--text-secondary); max-width: 600px; margin: 0 auto;">Your data protection is built into the architecture. We use industrial-grade safeguards at every layer.</p>
     </div>
 
-    <div class="card animate">
-      <h3>📊 Stats</h3>
-      <p>Total: <span id="total">0</span></p>
-      <p>Present: <span id="present">0</span></p>
-      <p>Attendance: <span id="percent">0%</span></p>
+    <div class="features-grid">
+      <div class="feature-card glass-panel" style="border-left: 4px solid var(--accent-primary);">
+        <h4 class="feature-name">🔐 Token-Based Auth (JWT)</h4>
+        <p class="feature-desc">All sessions are signed using cryptographically secure JSON Web Tokens. Credentials are stored securely and never transmitted in raw format.</p>
+      </div>
+      <div class="feature-card glass-panel" style="border-left: 4px solid var(--accent-secondary);">
+        <h4 class="feature-name">🛡️ Role Verification</h4>
+        <p class="feature-desc">Granular authorization gates verify whether a user is an administrator or student before validating server requests, blocking injection attempts.</p>
+      </div>
+      <div class="feature-card glass-panel" style="border-left: 4px solid var(--accent-primary);">
+        <h4 class="feature-name">🔑 Secret Key Gatekeeper</h4>
+        <p class="feature-desc">Administrative signups require validation using a unique invitation secret key, stopping unauthorized personnel from accessing control panels.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ SECTION -->
+  <section class="features-section" id="faq" style="margin-top: 150px; margin-bottom: 150px;">
+    <div class="features-title-container">
+      <div class="hero-tag">❓ Clear Answers</div>
+      <h2 class="features-title">Frequently Asked Questions</h2>
+      <p style="color: var(--text-secondary); max-width: 600px; margin: 0 auto;">Everything you need to know about the platform controls and operation.</p>
     </div>
 
-  </div>
+    <div style="max-width: 800px; margin: 0 auto; display: flex; flex-direction: column; gap: 20px;">
+      <details class="glass-panel faq-accordion-item">
+        <summary class="faq-accordion-header">How does the student/admin registration work?</summary>
+        <div class="faq-accordion-body">
+          Registration is separated by roles. To register as an Administrator (Teacher), you must enter a pre-configured <strong>Admin Secret Key</strong>. Students can sign up freely but will only access the read-only attendance panels matching their specific email accounts.
+        </div>
+      </details>
 
-  <!-- RIGHT -->
-  <div class="card big animate">
+      <details class="glass-panel faq-accordion-item">
+        <summary class="faq-accordion-header">What is the 30-Day Grid heatmap?</summary>
+        <div class="faq-accordion-body">
+          It is a contribution calendar grid similar to GitHub's code activity feed. It displays your last 30 calendar days of classes: Green represents a day you were present, Red means absent, Yellow is late, and Grey means no classes were scheduled for that day.
+        </div>
+      </details>
 
-    <h3>📋 Attendance Records</h3>
+      <details class="glass-panel faq-accordion-item">
+        <summary class="faq-accordion-header">Can educators export records for spreadsheets?</summary>
+        <div class="faq-accordion-body">
+          Yes! Inside the Records section, admins can filter by student email, subject, or dates, and click the <strong>Export CSV</strong> button. The application will instantly format the active search table rows into a CSV spreadsheet file and trigger a browser download.
+        </div>
+      </details>
 
-    <div class="filters">
-      <input id="search" placeholder="Search...">
-      <button onclick="searchAttendance()">Search</button>
-
-      <select id="filterStatus">
-        <option value="">All</option>
-        <option>Present</option>
-        <option>Absent</option>
-      </select>
-
-      <button onclick="filterAttendance()">Filter</button>
+      <details class="glass-panel faq-accordion-item">
+        <summary class="faq-accordion-header">How do I test the dashboard with sample statistics?</summary>
+        <div class="faq-accordion-body">
+          Inside the admin panel, pick a student email, enter their name, and click the <strong>✨ Seed Demo Data</strong> button. The app will generate 15 realistic historical attendance records spread over the past month, immediately populating the heatmap grid, doughnut/bar charts, and progress bars.
+        </div>
+      </details>
     </div>
+  </section>
 
-    <ul id="list"></ul>
+  <!-- FOOTER -->
+  <footer class="landing-footer">
+    <p>&copy; 2026 Smart Attendance System. Designed for ultimate classroom administration and compliance. All rights reserved.</p>
+  </footer>
 
-  </div>
+  <script>
+    // Local script to toggle themes on the landing page
+    const savedTheme = localStorage.getItem("theme") || "light";
+    if (savedTheme === "dark") {
+      document.body.classList.add("dark-mode");
+      const btn = document.querySelector(".theme-toggle-btn");
+      if (btn) btn.innerText = "🌙";
+    }
 
-</div>
+    function toggleTheme() {
+      const body = document.body;
+      body.classList.toggle("dark-mode");
+      const btn = document.querySelector(".theme-toggle-btn");
+      if (body.classList.contains("dark-mode")) {
+        btn.innerText = "🌙";
+        localStorage.setItem("theme", "dark");
+      } else {
+        btn.innerText = "☀️";
+        localStorage.setItem("theme", "light");
+      }
+    }
 
-<script src="script.js"></script>
+    // 3D Parallax hover tilt on the hero preview card
+    const card = document.getElementById("previewCard");
+    if (card) {
+      card.addEventListener("mousemove", (e) => {
+        const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+        const rotateX = ((centerY - y) / centerY) * 4;
+        const rotateY = ((x - centerX) / centerX) * 4;
+        card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.01, 1.01, 1.01)`;
+      });
+      card.addEventListener("mouseleave", () => {
+        card.style.transform = "perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)";
+      });
+    }
+
+    // Scroll Fade-in Intersection Observer
+    const observerOptions = { threshold: 0.1 };
+    const observer = new IntersectionObserver((entries, observer) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("appear");
+          observer.unobserve(entry.target);
+        }
+      });
+    }, observerOptions);
+
+    document.querySelectorAll(".feature-card, .features-title-container, .hero-section > *, #security .feature-card, #faq details").forEach(el => {
+      el.classList.add("fade-in-on-scroll");
+      observer.observe(el);
+    });
+
+    // Dynamic Live Simulation on Landing Page
+    function runLandingDemo(e) {
+      e.preventDefault();
+      const subjects = ['Data Structures', 'Machine Learning', 'Linear Algebra', 'Computer Networks'];
+      const students = ['Sarah Connor', 'John Doe', 'Bruce Wayne', 'Clark Kent', 'Jane Miller'];
+      const statuses = ['Present', 'Absent', 'Late'];
+      const colors = { Present: '#2d8a6b', Absent: '#b93c3c', Late: '#c9883b' };
+
+      const sub = subjects[Math.floor(Math.random() * subjects.length)];
+      const name = students[Math.floor(Math.random() * students.length)];
+      const stat = statuses[Math.floor(Math.random() * statuses.length)];
+
+      const totalEl = document.getElementById("mockTotal");
+      const riskEl = document.getElementById("mockRisk");
+      const rateEl = document.getElementById("mockRate");
+
+      let currentTotal = parseInt(totalEl.innerText);
+      totalEl.innerText = currentTotal + 1;
+      totalEl.style.transform = "scale(1.2)";
+      setTimeout(() => totalEl.style.transform = "scale(1)", 200);
+
+      let currentRisk = parseInt(riskEl.innerText);
+      if (stat === "Absent") {
+        riskEl.innerText = currentRisk + 1;
+        riskEl.style.transform = "scale(1.2)";
+        setTimeout(() => riskEl.style.transform = "scale(1)", 200);
+      }
+
+      // Re-calculate mock percentage
+      let currentRate = parseFloat(rateEl.innerText);
+      let nextRate = stat === "Present" 
+        ? Math.min(100, currentRate + 0.2) 
+        : stat === "Late" 
+        ? currentRate 
+        : Math.max(0, currentRate - 0.5);
+      rateEl.innerText = nextRate.toFixed(1) + "%";
+      rateEl.style.transform = "scale(1.2)";
+      setTimeout(() => rateEl.style.transform = "scale(1)", 200);
+
+      showLandingToast(`Simulated: ${name} logged ${stat} in ${sub}`, stat);
+    }
+
+    function showLandingToast(msg, status) {
+      let container = document.getElementById("landingToastContainer");
+      if (!container) {
+        container = document.createElement("div");
+        container.id = "landingToastContainer";
+        container.style = "position: fixed; bottom: 30px; right: 30px; display: flex; flex-direction: column; gap: 10px; z-index: 2000;";
+        document.body.appendChild(container);
+      }
+
+      const toast = document.createElement("div");
+      toast.style.background = "var(--glass-bg)";
+      toast.style.color = "var(--text-primary)";
+      toast.style.padding = "14px 20px";
+      toast.style.borderRadius = "var(--radius-md)";
+      toast.style.border = "1px solid var(--glass-border)";
+      toast.style.boxShadow = "var(--card-glow-indigo)";
+      toast.style.backdropFilter = "blur(16px)";
+      toast.style.fontSize = "13px";
+      toast.style.fontWeight = "600";
+      toast.style.transition = "all 0.4s ease";
+      toast.style.transform = "translateY(20px)";
+      toast.style.opacity = "0";
+      toast.style.borderLeft = `4px solid ${status === 'Present' ? '#2d8a6b' : status === 'Absent' ? '#b93c3c' : '#c9883b'}`;
+
+      toast.innerText = msg;
+      container.appendChild(toast);
+
+      setTimeout(() => {
+        toast.style.transform = "translateY(0)";
+        toast.style.opacity = "1";
+      }, 10);
+
+      setTimeout(() => {
+        toast.style.transform = "translateY(-20px)";
+        toast.style.opacity = "0";
+        setTimeout(() => toast.remove(), 400);
+      }, 3500);
+    }
+  </script>
+  <div id="landingToastContainer" style="position: fixed; bottom: 30px; right: 30px; display: flex; flex-direction: column; gap: 10px; z-index: 2000;"></div>
 </body>
 </html>

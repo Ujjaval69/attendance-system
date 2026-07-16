@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard - Smart Attendance System</title>
+  <link rel="stylesheet" href="style.css">
+  <!-- Chart.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+  <!-- HEADER / NAVBAR -->
+  <header class="glass-panel">
+    <div class="navbar-content">
+      <div class="brand-section">
+        <span>🎓 Smart Attendance</span>
+      </div>
+      <div class="nav-actions">
+        <div class="user-display-profile" id="userDisplay">
+          <div class="avatar-initial" id="avatarInitial">U</div>
+          <span id="userInfo">Loading User...</span>
+        </div>
+        <button class="theme-toggle-btn" onclick="toggleTheme()" aria-label="Toggle Theme">🌙</button>
+        <button class="secondary-btn" onclick="logout()">Logout</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN CONTAINER -->
+  <main class="main-dashboard-wrapper">
+    
+    <!-- STATS CARDS -->
+    <section class="stats-cards-grid">
+      <div class="stat-card glass-panel">
+        <div class="stat-details">
+          <h4>Total Records</h4>
+          <span class="value" id="statTotal">0</span>
+        </div>
+        <div class="stat-icon-wrapper">📊</div>
+      </div>
+      
+      <div class="stat-card glass-panel">
+        <div class="stat-details">
+          <h4>Days Present</h4>
+          <span class="value" id="statPresent">0</span>
+        </div>
+        <div class="stat-icon-wrapper">✅</div>
+      </div>
+      
+      <div class="stat-card glass-panel">
+        <div class="stat-details">
+          <h4>Days Late</h4>
+          <span class="value" id="statLate">0</span>
+        </div>
+        <div class="stat-icon-wrapper">⏳</div>
+      </div>
+
+      <div class="stat-card glass-panel">
+        <div class="stat-details">
+          <h4>Attendance Rate</h4>
+          <span class="value" id="statPercent">0%</span>
+        </div>
+        <div class="stat-icon-wrapper">📈</div>
+      </div>
+    </section>
+
+    <!-- DASHBOARD CONTENT SPLIT -->
+    <div class="dashboard-content-split">
+      
+      <!-- LEFT COLUMN (FORMS / SYSTEM CONTROLS) -->
+      <aside class="left-panel-forms">
+        
+        <!-- ADMIN ONLY: Add Record Panel -->
+        <div class="panel-card glass-panel" id="adminAddPanel">
+          <h3>➕ Add Attendance</h3>
+          <form onsubmit="event.preventDefault(); addAttendance();">
+            <label for="studentEmailSelect">Student Account</label>
+            <select id="studentEmailSelect" required>
+              <option value="" disabled selected>Select a student...</option>
+            </select>
+
+            <label for="studentNameInput">Student Display Name</label>
+            <input type="text" id="studentNameInput" placeholder="John Doe" required>
+
+            <label for="subjectInput">Subject / Course</label>
+            <input type="text" id="subjectInput" placeholder="Mathematics" required>
+
+            <label for="dateInput">Date</label>
+            <input type="date" id="dateInput" required>
+
+            <label for="statusSelect">Attendance Status</label>
+            <select id="statusSelect" required>
+              <option value="Present" selected>Present</option>
+              <option value="Absent">Absent</option>
+              <option value="Late">Late</option>
+            </select>
+
+            <button type="submit">Submit Attendance</button>
+            <button type="button" class="secondary-btn" style="margin-top: 10px; width: 100%; border: 1px dashed var(--accent-primary);" onclick="seedDemoData()">✨ Seed Demo Data</button>
+          </form>
+        </div>
+
+        <!-- STUDENT ONLY: Informational Panel -->
+        <div class="panel-card glass-panel" id="studentInfoPanel" style="display: none;">
+          <h3>ℹ️ Attendance Target</h3>
+          <div style="margin-top: 15px; display: flex; flex-direction: column; gap: 10px;">
+            <p>To qualify for final exams, students are required to maintain a minimum of <strong>75.0%</strong> attendance rate.</p>
+            <div id="targetIndicator" style="padding: 12px; border-radius: 8px; text-align: center; font-weight: 700; margin-top: 10px;">
+              Checking status...
+            </div>
+          </div>
+        </div>
+
+        <!-- ADMIN ONLY: At-Risk Students Panel -->
+        <div class="panel-card glass-panel" id="adminRiskPanel" style="display: none;">
+          <h3>⚠️ At-Risk Students (&lt;75%)</h3>
+          <div id="riskStudentsList" style="margin-top: 15px; display: flex; flex-direction: column; gap: 12px;">
+            <p style="font-size: 14px; color: var(--text-secondary);">Calculating risks...</p>
+          </div>
+        </div>
+
+        <!-- Subject Breakdown Card -->
+        <div class="panel-card glass-panel" id="subjectBreakdownPanel">
+          <h3>📚 Subject Breakdown</h3>
+          <div id="subjectBreakdownList" style="margin-top: 15px; display: flex; flex-direction: column; gap: 16px;">
+            <p style="font-size: 14px; color: var(--text-secondary);">No records logged yet.</p>
+          </div>
+        </div>
+
+        <!-- STUDENT / ADMIN: 30-Day Heatmap Grid Panel -->
+        <div class="panel-card glass-panel" id="heatmapPanel">
+          <h3>📅 Last 30 Days Grid</h3>
+          <div id="heatmapGridList" class="attendance-grid-container" style="margin-top: 15px;">
+            <div class="attendance-grid-wrapper" id="heatmapGridWrapper">
+              <!-- Loaded dynamically -->
+            </div>
+            <div style="display: flex; gap: 10px; font-size: 10px; color: var(--text-muted); justify-content: center; margin-top: 8px; flex-wrap: wrap;">
+              <span style="display: flex; align-items: center; gap: 4px;"><span style="width: 8px; height: 8px; background: var(--status-present); border-radius: 2px;"></span> P</span>
+              <span style="display: flex; align-items: center; gap: 4px;"><span style="width: 8px; height: 8px; background: var(--status-absent); border-radius: 2px;"></span> A</span>
+              <span style="display: flex; align-items: center; gap: 4px;"><span style="width: 8px; height: 8px; background: var(--status-late); border-radius: 2px;"></span> L</span>
+              <span style="display: flex; align-items: center; gap: 4px;"><span style="width: 8px; height: 8px; background: rgba(255, 255, 255, 0.05); border-radius: 2px; border: 1px solid var(--glass-border);"></span> Off</span>
+            </div>
+          </div>
+        </div>
+
+      </aside>
+
+      <!-- RIGHT COLUMN (ANALYTICS & RECORDS) -->
+      <section style="display: flex; flex-direction: column; gap: 30px; flex: 1;">
+        
+        <!-- ANALYTICS CHARTS -->
+        <div class="analytics-section">
+          <div class="chart-card glass-panel">
+            <h4>Attendance Ratio</h4>
+            <div class="chart-canvas-container">
+              <canvas id="ratioChart"></canvas>
+            </div>
+          </div>
+          <div class="chart-card glass-panel">
+            <h4>Subject Analysis</h4>
+            <div class="chart-canvas-container">
+              <canvas id="subjectChart"></canvas>
+            </div>
+          </div>
+        </div>
+
+        <!-- RECORDS SECTION -->
+        <div class="panel-card glass-panel records-container">
+          <div class="filters-header-bar">
+            <h3>📋 Attendance Records</h3>
+            
+            <div class="search-filters-group">
+              <input type="text" id="searchInput" oninput="applyFiltersAndSearch()" placeholder="Search student or subject...">
+              
+              <select id="statusFilter" onchange="applyFiltersAndSearch()">
+                <option value="">All Statuses</option>
+                <option value="Present">Present</option>
+                <option value="Absent">Absent</option>
+                <option value="Late">Late</option>
+              </select>
+
+              <select id="subjectFilter" onchange="applyFiltersAndSearch()">
+                <option value="">All Subjects</option>
+              </select>
+              
+              <button class="secondary-btn" style="padding: 10px 14px; font-size: 14px; margin: 0; display: inline-flex; align-items: center; gap: 6px;" onclick="exportToCSV()">📥 Export CSV</button>
+            </div>
+          </div>
+
+          <div class="table-responsive-wrapper">
+            <table>
+              <thead>
+                <tr>
+                  <th>Date</th>
+                  <th>Student Name</th>
+                  <th>Email</th>
+                  <th>Subject</th>
+                  <th>Status</th>
+                  <th class="admin-only-header">Actions</th>
+                </tr>
+              </thead>
+              <tbody id="attendanceTableBody">
+                <!-- Loaded dynamically -->
+              </tbody>
+            </table>
+          </div>
+          
+          <!-- Empty State -->
+          <div class="empty-state-placeholder" id="emptyState" style="display: none;">
+            <div class="empty-state-icon">📭</div>
+            <h4>No Attendance Records Found</h4>
+            <p>Try refining your search terms or filter constraints.</p>
+          </div>
+        </div>
+
+      </section>
+
+    </div>
+
+  </main>
+
+  <!-- EDIT ATTENDANCE MODAL -->
+  <div class="modal-overlay" id="editModal">
+    <div class="modal-box glass-panel">
+      <div class="modal-header">
+        <h3>✏️ Edit Attendance Status</h3>
+        <button class="modal-close-btn" onclick="closeEditModal()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <input type="hidden" id="editRecordId">
+        
+        <p style="margin-bottom: 15px; font-size: 14px; color: var(--text-secondary);">
+          Updating attendance record for <strong id="editStudentLabel">Student</strong> in <strong id="editSubjectLabel">Subject</strong>.
+        </p>
+
+        <label for="editStatusSelect">Attendance Status</label>
+        <select id="editStatusSelect">
+          <option value="Present">Present</option>
+          <option value="Absent">Absent</option>
+          <option value="Late">Late</option>
+        </select>
+      </div>
+      <div class="modal-footer">
+        <button class="secondary-btn" onclick="closeEditModal()">Cancel</button>
+        <button onclick="saveEditAttendance()">Save Changes</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOAST NOTIFICATION CONTAINER -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>

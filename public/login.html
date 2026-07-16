@@ -1,40 +1,44 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Login</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login - Smart Attendance System</title>
   <link rel="stylesheet" href="style.css">
 </head>
+<body>
+  
+  <div class="auth-wrapper">
+    <div class="auth-container glass-panel">
+      <!-- Left side: Branding -->
+      <div class="auth-left-branding">
+        <div class="branding-logo">🎓</div>
+        <h1>Smart Attendance System</h1>
+        <p>An advanced platform to seamlessly track, analyze, and manage attendance analytics in real-time. Designed with premium security and dynamic tools.</p>
+      </div>
 
-<body class="auth-body">
-
-<!-- BACKGROUND EFFECT -->
-<div class="bg-glow"></div>
-
-<div class="auth-container">
-
-  <!-- LEFT SIDE (BRANDING) -->
-  <div class="auth-left">
-    <h1>🚀 Smart Attendance</h1>
-    <p>Track • Analyze • Improve</p>
+      <!-- Right side: Login Form -->
+      <div class="auth-right-form">
+        <h2>🔐 Welcome Back</h2>
+        <p class="subtitle">Access your personalized portal</p>
+        
+        <form onsubmit="event.preventDefault(); login();">
+          <label for="email">Email Address</label>
+          <input type="email" id="email" placeholder="name@school.com" required>
+          
+          <label for="password">Password</label>
+          <input type="password" id="password" placeholder="••••••••" required>
+          
+          <button type="submit">Sign In</button>
+        </form>
+        
+        <p class="auth-link-text">
+          Don't have an account? <a href="signup.html">Create Account</a>
+        </p>
+      </div>
+    </div>
   </div>
 
-  <!-- RIGHT SIDE (FORM) -->
-  <div class="auth-card">
-    <h2>🔐 Welcome Back</h2>
-    <p class="sub">Login to your dashboard</p>
-
-    <input id="email" placeholder="Email Address">
-    <input id="password" type="password" placeholder="Password">
-
-    <button onclick="login()">Login</button>
-
-    <p class="link">
-      Don't have account? <a href="signup.html">Signup</a>
-    </p>
-  </div>
-
-</div>
-
-<script src="script.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>

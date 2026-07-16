@@ -1,39 +1,48 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Signup</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Signup - Smart Attendance System</title>
   <link rel="stylesheet" href="style.css">
 </head>
-
-<body class="auth-body">
-
-<div class="bg-glow"></div>
-
-<div class="auth-center">
-
-  <div class="auth-card small">
-
-    <h2>✨ Create Account</h2>
-    <p class="sub">Start your journey 🚀</p>
-
-    <input id="email" placeholder="Email Address">
-    <input id="password" type="password" placeholder="Password">
-
-    <select id="role">
-      <option value="student">Student</option>
-      <option value="admin">Admin</option>
-    </select>
-
-    <button onclick="signup()">Signup</button>
-
-    <p class="link">
-      <a href="login.html">Back to Login</a>
-    </p>
-
+<body>
+  
+  <div class="auth-wrapper">
+    <div class="auth-container signup-mode glass-panel">
+      <!-- Form Section -->
+      <div class="auth-right-form">
+        <h2>✨ Create Account</h2>
+        <p class="subtitle">Join the Smart Attendance network today</p>
+        
+        <form onsubmit="event.preventDefault(); signup();">
+          <label for="email">Email Address</label>
+          <input type="email" id="email" placeholder="name@school.com" required>
+          
+          <label for="password">Password</label>
+          <input type="password" id="password" placeholder="Min 6 characters" required minlength="6">
+          
+          <label for="role">Register As</label>
+          <select id="role" required onchange="toggleAdminSecretField()">
+            <option value="student" selected>Student</option>
+            <option value="admin">Admin / Instructor</option>
+          </select>
+          
+          <div id="adminSecretGroup" style="display: none;">
+            <label for="adminSecret">Admin Authorization Key</label>
+            <input type="password" id="adminSecret" placeholder="Enter administrative auth key">
+          </div>
+          
+          <button type="submit">Sign Up</button>
+        </form>
+        
+        <p class="auth-link-text">
+          Already have an account? <a href="login.html">Back to Sign In</a>
+        </p>
+      </div>
+    </div>
   </div>
 
-</div>
-
-<script src="script.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>

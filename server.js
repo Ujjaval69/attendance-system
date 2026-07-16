@@ -1,13 +1,19 @@
 require("dotenv").config();
 const express = require("express");
-const mongoose = require("mongoose");
 const cors = require("cors");
 const path = require("path");
+const connectDB = require("./config/db");
+const logger = require("./middleware/logger");
+const errorMiddleware = require("./middleware/errorMiddleware");
 
 const app = express();
 
+// Connect Database
+connectDB();
+
 app.use(cors());
 app.use(express.json());
+app.use(logger); // Logger middleware
 
 app.use(express.static(path.join(__dirname, "public")));
 
@@ -17,15 +23,15 @@ const attendanceRoutes = require("./routes/attendanceRoutes");
 app.use("/api/auth", authRoutes);
 app.use("/api/attendance", attendanceRoutes);
 
-// default → login page
+// default → landing page
 app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "public", "login.html"));
+  res.sendFile(path.join(__dirname, "public", "index.html"));
 });
 
-mongoose.connect(process.env.MONGO_URI)
-  .then(() => console.log("MongoDB Connected ✅"))
-  .catch(err => console.log("DB ERROR:", err));
+// Error handling middleware (must be last)
+app.use(errorMiddleware);
 
-app.listen(process.env.PORT, () => {
-  console.log("Server running on http://localhost:3000");
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`Server running on http://localhost:${PORT}`);
 });
