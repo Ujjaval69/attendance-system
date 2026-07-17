@@ -31,7 +31,12 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // Auth pages logic
-  if (isAuthPage) return;
+  if (isAuthPage) {
+    if (window.location.pathname.includes("signup.html")) {
+      localStorage.clear();
+    }
+    return;
+  }
 
   // Initialize Dashboard Details
   const userInfoEl = document.getElementById("userInfo");
