@@ -1,5 +1,7 @@
 # 🎓 Smart Attendance System
 
+👉 **Live Demo**: [attendance-system-an2i.onrender.com](https://attendance-system-an2i.onrender.com)
+
 A next-generation, secure, and role-gated classroom compliance dashboard. Designed with an editorial minimalist aesthetic, interactive analytics charts, and a hardware-accelerated 3D parallax layout.
 
 This project features secure role permissions separating **Administrators (Teachers)** and **Students**, protecting database integrity while delivering real-time statistics.
