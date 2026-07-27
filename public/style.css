@@ -4,6 +4,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap');
 
 :root {
+  color-scheme: light;
   /* Colors (Luxury Light Editorial Theme - High Contrast) */
   --bg-primary: #ebe7dd; /* Rich Warm Alabaster Beige */
   --bg-secondary: #ffffff;
@@ -42,6 +43,7 @@
 
 /* Dark Mode Variables (Luxury Carbon & Sage Green - High Contrast) */
 body.dark-mode {
+  color-scheme: dark;
   --bg-primary: #050507; /* Absolute Midnight Black */
   --bg-secondary: #1a1a22; /* High-contrast Slate Carbon Card Background */
   --accent-primary: #b59461; /* Gold */
