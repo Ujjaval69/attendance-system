@@ -81,44 +81,16 @@ body.dark-mode {
 
 body {
   background-color: var(--bg-primary);
+  background-image: 
+    radial-gradient(circle at 0% 0%, var(--accent-primary-glow) 0%, transparent 50%),
+    radial-gradient(circle at 100% 100%, var(--accent-secondary-glow) 0%, transparent 50%);
+  background-attachment: fixed;
   color: var(--text-primary);
   font-family: var(--font-sans);
   min-height: 100vh;
   overflow-x: hidden;
   position: relative;
   transition: background-color 0.4s ease, color 0.4s ease;
-}
-
-/* Background Glow Effects */
-body::before, body::after {
-  content: "";
-  position: fixed;
-  border-radius: 50%;
-  filter: blur(120px);
-  z-index: -2;
-  pointer-events: none;
-  opacity: 0.18;
-  transition: opacity 0.5s ease;
-}
-
-body::before {
-  width: 500px;
-  height: 500px;
-  top: -100px;
-  left: -100px;
-  background: radial-gradient(circle, var(--accent-primary) 0%, transparent 80%);
-}
-
-body::after {
-  width: 600px;
-  height: 600px;
-  bottom: -150px;
-  right: -150px;
-  background: radial-gradient(circle, var(--accent-secondary) 0%, transparent 80%);
-}
-
-body.dark-mode::before, body.dark-mode::after {
-  opacity: 0.28;
 }
 
 /* Custom Scrollbar */
