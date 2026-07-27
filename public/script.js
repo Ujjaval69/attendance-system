@@ -686,6 +686,14 @@ function renderCharts(records) {
   const isDark = document.body.classList.contains("dark-mode");
   const textColor = isDark ? "#9ca3af" : "#5a6660";
   const gridColor = isDark ? "rgba(255, 255, 255, 0.05)" : "rgba(27, 77, 62, 0.08)";
+  
+  const presentColor = isDark ? "#52b788" : "#2d8a6b";
+  const absentColor = isDark ? "#f87171" : "#b93c3c";
+  const lateColor = isDark ? "#fbbf24" : "#c9883b";
+  const elementBg = isDark ? "#131317" : "#ffffff";
+  
+  const accentColor = isDark ? "#b59461" : "#1b4d3e";
+  const accentGlow = isDark ? "rgba(181, 148, 97, 0.75)" : "rgba(27, 77, 62, 0.75)";
 
   // --- Chart 1: Ratio Doughnut Chart ---
   const presentCount = records.filter(r => r.status === "Present").length;
@@ -702,8 +710,8 @@ function renderCharts(records) {
         labels: ["Present", "Absent", "Late"],
         datasets: [{
           data: [presentCount, absentCount, lateCount],
-          backgroundColor: ["#10b981", "#ef4444", "#f59e0b"],
-          borderColor: isDark ? "#131317" : "#ffffff",
+          backgroundColor: [presentColor, absentColor, lateColor],
+          borderColor: elementBg,
           borderWidth: 2
         }]
       },
@@ -741,8 +749,8 @@ function renderCharts(records) {
         datasets: [{
           label: "Attendance %",
           data: subjectPresentRates,
-          backgroundColor: "rgba(99, 102, 241, 0.75)",
-          borderColor: "#6366f1",
+          backgroundColor: accentGlow,
+          borderColor: accentColor,
           borderWidth: 1.5,
           borderRadius: 6
         }]
