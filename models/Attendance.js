@@ -5,7 +5,8 @@ const attendanceSchema = new mongoose.Schema({
     type: String,
     required: true,
     lowercase: true,
-    trim: true
+    trim: true,
+    index: true // Single field index for email lookups
   },
   studentName: {
     type: String,
@@ -24,8 +25,12 @@ const attendanceSchema = new mongoose.Schema({
   },
   date: {
     type: Date,
-    default: Date.now
+    default: Date.now,
+    index: true // Index for date sorting
   }
 });
+
+// Compound index for optimized sorting of a student's records by date
+attendanceSchema.index({ studentEmail: 1, date: -1 });
 
 module.exports = mongoose.model('Attendance', attendanceSchema);
