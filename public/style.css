@@ -528,6 +528,83 @@ button.danger-btn:hover {
   font-weight: 600;
 }
 
+/* Demo Quick Access */
+.demo-divider {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  margin: 22px 0 16px 0;
+  color: var(--text-muted);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.demo-divider::before,
+.demo-divider::after {
+  content: "";
+  flex: 1;
+  border-bottom: 1px solid var(--glass-border);
+}
+
+.demo-divider span {
+  padding: 0 12px;
+}
+
+.demo-buttons-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.demo-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 14px;
+  border-radius: var(--radius-sm);
+  background: var(--bg-subtle);
+  border: 1px solid var(--glass-border);
+  color: var(--text-primary);
+  font-size: 12.5px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.18s var(--ease-luxury);
+  margin: 0;
+}
+
+.demo-btn:hover {
+  transform: translateY(-2px);
+  background: var(--bg-card);
+  border-color: var(--accent-primary);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+}
+
+body.dark-mode .demo-btn:hover {
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
+}
+
+.demo-role-badge {
+  font-size: 10px;
+  text-transform: uppercase;
+  font-weight: 700;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-family: var(--font-mono);
+}
+
+.demo-role-badge.admin {
+  background: var(--accent-primary-glow);
+  color: var(--accent-primary);
+}
+
+.demo-role-badge.student {
+  background: var(--accent-secondary-glow);
+  color: var(--accent-secondary);
+}
+
 .auth-link-text {
   text-align: center;
   margin-top: 24px;

@@ -52,6 +52,21 @@
           
           <button type="submit" class="primary-btn auth-submit-btn">Sign In to Dashboard</button>
         </form>
+
+        <div class="demo-divider">
+          <span>OR QUICK TEST</span>
+        </div>
+
+        <div class="demo-buttons-grid">
+          <button type="button" class="demo-btn admin-demo-btn" onclick="quickDemoLogin('admin')">
+            <span class="demo-role-badge admin">Admin</span>
+            <span>⚡ Demo Admin</span>
+          </button>
+          <button type="button" class="demo-btn student-demo-btn" onclick="quickDemoLogin('student')">
+            <span class="demo-role-badge student">Student</span>
+            <span>🎓 Demo Student</span>
+          </button>
+        </div>
         
         <p class="auth-link-text">
           Don't have an account? <a href="signup.html">Create an Account</a>

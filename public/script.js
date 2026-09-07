@@ -860,36 +860,46 @@ function renderHeatmapGrid(records) {
 
 // SEED MOCK DEMO DATA
 async function seedDemoData() {
+  showToast("Seeding comprehensive dataset... Please wait", "info");
+
+  try {
+    const res = await fetch("/api/attendance/seed", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`
+      }
+    });
+
+    if (res.ok) {
+      const data = await res.json();
+      showToast(data.message || "Successfully seeded demo dataset!", "success");
+      await loadStudentsDropdown();
+      await loadAttendance();
+      return;
+    }
+  } catch (err) {
+    console.warn("Backend seed route error, trying client fallback:", err);
+  }
+
+  // Client-side fallback if backend endpoint wasn't reached
   const select = document.getElementById("studentEmailSelect");
-  if (!select || !select.value) {
-    showToast("Please select a student account first", "error");
-    return;
-  }
-
-  const studentEmail = select.value;
-  const studentName = document.getElementById("studentNameInput")?.value || "Test Student";
-
-  if (!confirm(`This will seed 15 realistic historical attendance records for ${studentName} (${studentEmail}). Proceed?`)) {
-    return;
-  }
-
-  showToast("Seeding records... Please wait", "info");
+  const studentEmail = select?.value || "student@demo.edu";
+  const studentName = document.getElementById("studentNameInput")?.value || "Demo Student";
 
   const subjects = ["Data Structures", "Machine Learning", "Linear Algebra", "Computer Networks"];
-  const statuses = ["Present", "Present", "Present", "Present", "Late", "Absent"];
+  const statuses = ["Present", "Present", "Present", "Late", "Absent"];
   
   const promises = [];
   const today = new Date();
-  let recordsCount = 0;
-  let daysAgo = 1;
 
-  while (recordsCount < 15 && daysAgo < 30) {
+  for (let daysAgo = 1; daysAgo <= 20; daysAgo++) {
     const d = new Date(today);
     d.setDate(today.getDate() - daysAgo);
     
     if (d.getDay() !== 0 && d.getDay() !== 6) {
-      const subject = subjects[Math.floor(Math.random() * subjects.length)];
-      const status = statuses[Math.floor(Math.random() * statuses.length)];
+      const subject = subjects[daysAgo % subjects.length];
+      const status = statuses[daysAgo % statuses.length];
       
       promises.push(
         fetch("/api/attendance", {
@@ -907,24 +917,67 @@ async function seedDemoData() {
           })
         })
       );
-      recordsCount++;
     }
-    daysAgo++;
   }
 
   try {
-    const results = await Promise.all(promises);
-    const allSuccessful = results.every(res => res.ok);
-    
-    if (allSuccessful) {
-      showToast("Successfully seeded 15 historical records!");
-      loadAttendance();
-    } else {
-      showToast("Some records failed to seed", "error");
-      loadAttendance();
+    await Promise.all(promises);
+    showToast("Successfully seeded realistic records!");
+    loadAttendance();
+  } catch (err) {
+    showToast("Error seeding demo records", "error");
+  }
+}
+
+// QUICK DEMO LOGIN (Instant access for testing)
+async function quickDemoLogin(targetRole) {
+  showToast(`Authenticating demo ${targetRole}...`, "info");
+
+  try {
+    const res = await fetch("/api/auth/demo-login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ role: targetRole })
+    });
+
+    const data = await res.json();
+    if (res.ok && data.token) {
+      localStorage.setItem("token", data.token);
+      localStorage.setItem("role", data.role);
+      localStorage.setItem("email", data.email);
+
+      // Auto seed if admin so charts and cards immediately illuminate
+      if (data.role === 'admin') {
+        try {
+          await fetch("/api/attendance/seed", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              "Authorization": `Bearer ${data.token}`
+            }
+          });
+        } catch (e) {
+          // ignore background seed
+        }
+      }
+
+      showToast(`Welcome! Logged in as Demo ${targetRole}`, "success");
+      setTimeout(() => {
+        window.location.href = "dashboard.html";
+      }, 400);
+      return;
     }
   } catch (err) {
-    showToast("Error seeding demo data", "error");
+    console.error("Demo login error:", err);
+  }
+
+  // Fallback: fill form and submit
+  const emailInput = document.getElementById("email");
+  const passwordInput = document.getElementById("password");
+  if (emailInput && passwordInput) {
+    emailInput.value = targetRole === "admin" ? "admin@demo.edu" : "student@demo.edu";
+    passwordInput.value = "demopassword123";
+    login();
   }
 }
 

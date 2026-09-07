@@ -79,4 +79,49 @@ router.get('/students', auth, roleMiddleware('admin'), async (req, res) => {
   }
 });
 
+// INSTANT DEMO LOGIN (One-click instant site testing)
+router.post('/demo-login', async (req, res) => {
+  try {
+    const { role } = req.body;
+    const targetRole = role === 'student' ? 'student' : 'admin';
+    const demoEmail = targetRole === 'admin' ? 'admin@demo.edu' : 'student@demo.edu';
+    const demoPassword = 'demopassword123';
+
+    let user = await User.findOne({ email: demoEmail });
+    if (!user) {
+      const hashed = await bcrypt.hash(demoPassword, 10);
+      user = await User.create({
+        email: demoEmail,
+        password: hashed,
+        role: targetRole
+      });
+    }
+
+    // Ensure demo student accounts exist so admin has students in dropdown
+    const demoStudents = [
+      { email: 'student@demo.edu' },
+      { email: 'sarah.connor@university.edu' },
+      { email: 'marcus.wright@university.edu' }
+    ];
+
+    for (const ds of demoStudents) {
+      const exists = await User.findOne({ email: ds.email });
+      if (!exists) {
+        const hashed = await bcrypt.hash(demoPassword, 10);
+        await User.create({ email: ds.email, password: hashed, role: 'student' });
+      }
+    }
+
+    const token = jwt.sign(
+      { id: user._id, email: user.email, role: user.role },
+      process.env.JWT_SECRET || 'secret123',
+      { expiresIn: '24h' }
+    );
+
+    res.json({ token, role: user.role, email: user.email });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 module.exports = router;
