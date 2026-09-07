@@ -15,16 +15,17 @@
       top: 0;
       left: 0;
       right: 0;
-      background: rgba(235, 231, 221, 0.85);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
+      background: rgba(248, 247, 244, 0.85);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
       border-bottom: 1px solid var(--glass-border);
       z-index: 1000;
       padding: 18px 0;
+      transition: background 0.3s ease, border-color 0.3s ease;
     }
     
     body.dark-mode .landing-header {
-      background: rgba(5, 5, 7, 0.85);
+      background: rgba(9, 10, 12, 0.85);
     }
     
     .landing-nav-container {
@@ -339,9 +340,9 @@
   <!-- HERO SECTION -->
   <section class="hero-section">
     <div class="hero-tag">✨ Next-Generation Tracking Suite</div>
-    <h1 class="hero-title">Beautiful attendance tracking<br>made incredibly simple.</h1>
+    <h1 class="hero-title">Institutional attendance tracking<br>refined and simplified.</h1>
     <p class="hero-subtitle">
-      Automate subject-wise attendance logs, visualize trends with interactive 3D panels, and identify at-risk students before final exams. Clean, robust, and secure.
+      Automate subject-wise attendance logs, visualize trends with interactive matrices, and identify at-risk students before final exams. Clean, robust, and secure.
     </p>
     <div class="hero-actions">
       <a href="signup.html" class="hero-primary-btn">Start Tracking For Free</a>
@@ -350,36 +351,36 @@
     
     <!-- Premium 3D Preview Widget (Glassmorphic Mockup) -->
     <div class="dashboard-preview-card glass-panel" id="previewCard">
-      <div style="background: rgba(0, 0, 0, 0.02); padding: 40px; border-radius: var(--radius-md); display: flex; flex-direction: column; gap: 20px;">
+      <div style="background: rgba(0, 0, 0, 0.02); padding: 36px; border-radius: var(--radius-md); display: flex; flex-direction: column; gap: 20px;">
         <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--glass-border); padding-bottom: 15px;">
-          <div style="display: flex; gap: 6px;">
-            <span style="width: 10px; height: 10px; background: #ff5f56; border-radius: 50%;"></span>
-            <span style="width: 10px; height: 10px; background: #ffbd2e; border-radius: 50%;"></span>
-            <span style="width: 10px; height: 10px; background: #27c93f; border-radius: 50%;"></span>
+          <div style="display: flex; gap: 7px;">
+            <span style="width: 10px; height: 10px; background: #E11D48; border-radius: 50%; opacity: 0.85;"></span>
+            <span style="width: 10px; height: 10px; background: #D97706; border-radius: 50%; opacity: 0.85;"></span>
+            <span style="width: 10px; height: 10px; background: #0D9488; border-radius: 50%; opacity: 0.85;"></span>
           </div>
-          <span style="font-size: 12px; color: var(--text-muted); font-weight: 500;">preview_dashboard_analytics.io</span>
+          <span style="font-size: 11px; font-family: var(--font-mono); color: var(--text-muted); font-weight: 500;">portal.smart-attendance.edu</span>
         </div>
         
-        <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; text-align: left;">
-          <div style="padding: 20px; border-radius: var(--radius-md); background: rgba(0,0,0,0.01); border: 1px solid var(--glass-border);">
-            <span style="font-size: 11px; color: var(--text-muted); text-transform: uppercase;">Total Records</span>
-            <div style="font-size: 28px; font-weight: 800; margin-top: 5px; color: var(--accent-primary); transition: transform 0.2s ease; display: inline-block;" id="mockTotal">124</div>
+        <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; text-align: left;">
+          <div style="padding: 20px; border-radius: var(--radius-md); background: var(--bg-card); border: 1px solid var(--glass-border);">
+            <span style="font-size: 11px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; font-weight: 600;">Total Records</span>
+            <div style="font-size: 30px; font-family: var(--font-mono); font-weight: 700; margin-top: 6px; color: var(--text-primary); transition: transform 0.2s ease; display: inline-block;" id="mockTotal">124</div>
           </div>
-          <div style="padding: 20px; border-radius: var(--radius-md); background: rgba(0,0,0,0.01); border: 1px solid var(--glass-border);">
-            <span style="font-size: 11px; color: var(--text-muted); text-transform: uppercase;">Overall Rate</span>
-            <div style="font-size: 28px; font-weight: 800; margin-top: 5px; color: #2d8a6b; transition: transform 0.2s ease; display: inline-block;" id="mockRate">89.4%</div>
+          <div style="padding: 20px; border-radius: var(--radius-md); background: var(--bg-card); border: 1px solid var(--glass-border);">
+            <span style="font-size: 11px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; font-weight: 600;">Overall Rate</span>
+            <div style="font-size: 30px; font-family: var(--font-mono); font-weight: 700; margin-top: 6px; color: var(--status-present); transition: transform 0.2s ease; display: inline-block;" id="mockRate">89.4%</div>
           </div>
-          <div style="padding: 20px; border-radius: var(--radius-md); background: rgba(0,0,0,0.01); border: 1px solid var(--glass-border);">
-            <span style="font-size: 11px; color: var(--text-muted); text-transform: uppercase;">At-Risk Alerts</span>
-            <div style="font-size: 28px; font-weight: 800; margin-top: 5px; color: #b93c3c; transition: transform 0.2s ease; display: inline-block;" id="mockRisk">2</div>
+          <div style="padding: 20px; border-radius: var(--radius-md); background: var(--bg-card); border: 1px solid var(--glass-border);">
+            <span style="font-size: 11px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; font-weight: 600;">At-Risk Alerts</span>
+            <div style="font-size: 30px; font-family: var(--font-mono); font-weight: 700; margin-top: 6px; color: var(--status-absent); transition: transform 0.2s ease; display: inline-block;" id="mockRisk">2</div>
           </div>
-          <div style="padding: 20px; border-radius: var(--radius-md); background: rgba(0,0,0,0.01); border: 1px solid var(--glass-border);">
-            <span style="font-size: 11px; color: var(--text-muted); text-transform: uppercase;">Pending Logs</span>
-            <div style="font-size: 28px; font-weight: 800; margin-top: 5px; color: #c9883b;">0</div>
+          <div style="padding: 20px; border-radius: var(--radius-md); background: var(--bg-card); border: 1px solid var(--glass-border);">
+            <span style="font-size: 11px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; font-weight: 600;">Audit Logs</span>
+            <div style="font-size: 30px; font-family: var(--font-mono); font-weight: 700; margin-top: 6px; color: var(--status-late);">0</div>
           </div>
         </div>
         <div style="text-align: center; margin-top: 10px;">
-          <button class="hero-primary-btn" style="padding: 10px 20px; font-size: 13px; border-radius: var(--radius-sm); border: none;" onclick="runLandingDemo(event)">⚡ Simulate Live Log</button>
+          <button class="hero-primary-btn" style="padding: 10px 22px; font-size: 13.5px; border-radius: var(--radius-sm); border: none;" onclick="runLandingDemo(event)">⚡ Simulate Live Log</button>
         </div>
       </div>
     </div>
@@ -561,7 +562,7 @@
       const subjects = ['Data Structures', 'Machine Learning', 'Linear Algebra', 'Computer Networks'];
       const students = ['Sarah Connor', 'John Doe', 'Bruce Wayne', 'Clark Kent', 'Jane Miller'];
       const statuses = ['Present', 'Absent', 'Late'];
-      const colors = { Present: '#2d8a6b', Absent: '#b93c3c', Late: '#c9883b' };
+      const colors = { Present: '#0D9488', Absent: '#E11D48', Late: '#D97706' };
 
       const sub = subjects[Math.floor(Math.random() * subjects.length)];
       const name = students[Math.floor(Math.random() * students.length)];
@@ -573,13 +574,13 @@
 
       let currentTotal = parseInt(totalEl.innerText);
       totalEl.innerText = currentTotal + 1;
-      totalEl.style.transform = "scale(1.2)";
+      totalEl.style.transform = "scale(1.15)";
       setTimeout(() => totalEl.style.transform = "scale(1)", 200);
 
       let currentRisk = parseInt(riskEl.innerText);
       if (stat === "Absent") {
         riskEl.innerText = currentRisk + 1;
-        riskEl.style.transform = "scale(1.2)";
+        riskEl.style.transform = "scale(1.15)";
         setTimeout(() => riskEl.style.transform = "scale(1)", 200);
       }
 
@@ -591,7 +592,7 @@
         ? currentRate 
         : Math.max(0, currentRate - 0.5);
       rateEl.innerText = nextRate.toFixed(1) + "%";
-      rateEl.style.transform = "scale(1.2)";
+      rateEl.style.transform = "scale(1.15)";
       setTimeout(() => rateEl.style.transform = "scale(1)", 200);
 
       showLandingToast(`Simulated: ${name} logged ${stat} in ${sub}`, stat);
@@ -607,19 +608,19 @@
       }
 
       const toast = document.createElement("div");
-      toast.style.background = "var(--glass-bg)";
+      toast.style.background = "var(--bg-card)";
       toast.style.color = "var(--text-primary)";
       toast.style.padding = "14px 20px";
-      toast.style.borderRadius = "var(--radius-md)";
+      toast.style.borderRadius = "var(--radius-sm)";
       toast.style.border = "1px solid var(--glass-border)";
-      toast.style.boxShadow = "var(--card-glow-indigo)";
+      toast.style.boxShadow = "var(--glass-shadow)";
       toast.style.backdropFilter = "blur(16px)";
       toast.style.fontSize = "13px";
       toast.style.fontWeight = "600";
-      toast.style.transition = "all 0.4s ease";
+      toast.style.transition = "all 0.3s var(--ease-luxury)";
       toast.style.transform = "translateY(20px)";
       toast.style.opacity = "0";
-      toast.style.borderLeft = `4px solid ${status === 'Present' ? '#2d8a6b' : status === 'Absent' ? '#b93c3c' : '#c9883b'}`;
+      toast.style.borderLeft = `3px solid ${status === 'Present' ? '#0D9488' : status === 'Absent' ? '#E11D48' : '#D97706'}`;
 
       toast.innerText = msg;
       container.appendChild(toast);
@@ -632,7 +633,7 @@
       setTimeout(() => {
         toast.style.transform = "translateY(-20px)";
         toast.style.opacity = "0";
-        setTimeout(() => toast.remove(), 400);
+        setTimeout(() => toast.remove(), 350);
       }, 3500);
     }
   </script>

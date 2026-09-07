@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Create Account - Smart Attendance</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -14,37 +15,51 @@
     <div class="auth-container signup-mode glass-panel">
       <!-- Form Section -->
       <div class="auth-right-form">
-        <h2>✨ Create Account</h2>
-        <p class="subtitle">Join the Smart Attendance network today</p>
+        <a href="index.html" class="auth-back-link">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+          <span>Back to Home</span>
+        </a>
+        
+        <div class="auth-form-header">
+          <h2>Create Account</h2>
+          <p class="subtitle">Register to begin tracking institutional attendance</p>
+        </div>
         
         <form onsubmit="event.preventDefault(); signup();">
-          <label for="email">Email Address</label>
-          <input type="email" id="email" placeholder="name@school.com" required>
+          <div class="form-group">
+            <label for="email">Institutional Email</label>
+            <input type="email" id="email" placeholder="name@university.edu" required autocomplete="email">
+          </div>
           
-          <label for="password">Password</label>
-          <input type="password" id="password" placeholder="Min 6 characters" required minlength="6">
+          <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" id="password" placeholder="Minimum 6 characters" required minlength="6" autocomplete="new-password">
+          </div>
           
-          <label for="role">Register As</label>
-          <select id="role" required onchange="toggleAdminSecretField()">
-            <option value="student" selected>Student</option>
-            <option value="admin">Admin / Instructor</option>
-          </select>
+          <div class="form-group">
+            <label for="role">Register As</label>
+            <select id="role" required onchange="toggleAdminSecretField()">
+              <option value="student" selected>Student</option>
+              <option value="admin">Instructor / Administrator</option>
+            </select>
+          </div>
           
-          <div id="adminSecretGroup" style="display: none;">
+          <div class="form-group" id="adminSecretGroup" style="display: none;">
             <label for="adminSecret">Admin Authorization Key</label>
             <input type="password" id="adminSecret" placeholder="Enter administrative auth key">
           </div>
           
-          <button type="submit">Sign Up</button>
+          <button type="submit" class="primary-btn auth-submit-btn">Complete Registration</button>
         </form>
         
         <p class="auth-link-text">
-          Already have an account? <a href="login.html">Back to Sign In</a>
+          Already have an account? <a href="login.html">Sign in instead</a>
         </p>
       </div>
     </div>
   </div>
 
+  <div class="toast-container" id="toastContainer"></div>
   <script src="script.js"></script>
 </body>
 </html>
