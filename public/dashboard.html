@@ -33,12 +33,13 @@
   <!-- MAIN CONTAINER -->
   <main class="main-dashboard-wrapper">
     
-    <!-- STATS CARDS -->
+    <!-- STATS CARDS (EXECUTIVE KPI HUD STRIP) -->
     <section class="stats-cards-grid">
       <div class="stat-card glass-panel">
         <div class="stat-details">
           <h4>Total Records</h4>
-          <span class="value" id="statTotal">0</span>
+          <span class="value font-mono" id="statTotal">0</span>
+          <span class="stat-card-badge neutral">Institutional Log</span>
         </div>
         <div class="stat-icon-wrapper">📊</div>
       </div>
@@ -46,7 +47,8 @@
       <div class="stat-card glass-panel">
         <div class="stat-details">
           <h4>Days Present</h4>
-          <span class="value" id="statPresent">0</span>
+          <span class="value font-mono" id="statPresent">0</span>
+          <span class="stat-card-badge present">● Verified Present</span>
         </div>
         <div class="stat-icon-wrapper">✅</div>
       </div>
@@ -54,7 +56,8 @@
       <div class="stat-card glass-panel">
         <div class="stat-details">
           <h4>Days Late</h4>
-          <span class="value" id="statLate">0</span>
+          <span class="value font-mono" id="statLate">0</span>
+          <span class="stat-card-badge late">● Grace Period</span>
         </div>
         <div class="stat-icon-wrapper">⏳</div>
       </div>
@@ -62,17 +65,18 @@
       <div class="stat-card glass-panel">
         <div class="stat-details">
           <h4>Attendance Rate</h4>
-          <span class="value" id="statPercent">0%</span>
+          <span class="value font-mono" id="statPercent">0%</span>
+          <span class="stat-card-badge percent">75% Benchmark</span>
         </div>
         <div class="stat-icon-wrapper">📈</div>
       </div>
     </section>
 
-    <!-- DASHBOARD CONTENT SPLIT -->
+    <!-- OPERATIONAL HUB (TWO-COLUMN BALANCED SPLIT) -->
     <div class="dashboard-content-split">
       
-      <!-- LEFT COLUMN (FORMS / SYSTEM CONTROLS) -->
-      <aside class="left-panel-forms">
+      <!-- LEFT COLUMN (ADMIN ACTIONS & RISK AUDIT) -->
+      <div class="dashboard-column left-work-column">
         
         <!-- ADMIN ONLY: Add Record Panel -->
         <div class="panel-card glass-panel" id="adminAddPanel">
@@ -123,6 +127,27 @@
           </div>
         </div>
 
+      </div>
+
+      <!-- RIGHT COLUMN (DATA VISUALIZATION & CALENDAR MATRIX) -->
+      <div class="dashboard-column right-analytics-column">
+        
+        <!-- ANALYTICS CHARTS -->
+        <div class="analytics-section">
+          <div class="chart-card glass-panel">
+            <h4>Attendance Ratio</h4>
+            <div class="chart-canvas-container">
+              <canvas id="ratioChart"></canvas>
+            </div>
+          </div>
+          <div class="chart-card glass-panel">
+            <h4>Subject Analysis</h4>
+            <div class="chart-canvas-container">
+              <canvas id="subjectChart"></canvas>
+            </div>
+          </div>
+        </div>
+
         <!-- Subject Breakdown Card -->
         <div class="panel-card glass-panel" id="subjectBreakdownPanel">
           <h3>📚 Subject Breakdown</h3>
@@ -147,79 +172,58 @@
           </div>
         </div>
 
-      </aside>
-
-      <!-- RIGHT COLUMN (ANALYTICS & RECORDS) -->
-      <section style="display: flex; flex-direction: column; gap: 30px; flex: 1;">
-        
-        <!-- ANALYTICS CHARTS -->
-        <div class="analytics-section">
-          <div class="chart-card glass-panel">
-            <h4>Attendance Ratio</h4>
-            <div class="chart-canvas-container">
-              <canvas id="ratioChart"></canvas>
-            </div>
-          </div>
-          <div class="chart-card glass-panel">
-            <h4>Subject Analysis</h4>
-            <div class="chart-canvas-container">
-              <canvas id="subjectChart"></canvas>
-            </div>
-          </div>
-        </div>
-
-        <!-- RECORDS SECTION -->
-        <div class="panel-card glass-panel records-container">
-          <div class="filters-header-bar">
-            <h3>📋 Attendance Records</h3>
-            
-            <div class="search-filters-group">
-              <input type="text" id="searchInput" oninput="applyFiltersAndSearch()" placeholder="Search student or subject...">
-              
-              <select id="statusFilter" onchange="applyFiltersAndSearch()">
-                <option value="">All Statuses</option>
-                <option value="Present">Present</option>
-                <option value="Absent">Absent</option>
-                <option value="Late">Late</option>
-              </select>
-
-              <select id="subjectFilter" onchange="applyFiltersAndSearch()">
-                <option value="">All Subjects</option>
-              </select>
-              
-              <button class="secondary-btn" style="padding: 10px 14px; font-size: 14px; margin: 0; display: inline-flex; align-items: center; gap: 6px;" onclick="exportToCSV()">📥 Export CSV</button>
-            </div>
-          </div>
-
-          <div class="table-responsive-wrapper">
-            <table>
-              <thead>
-                <tr>
-                  <th>Date</th>
-                  <th>Student Name</th>
-                  <th>Email</th>
-                  <th>Subject</th>
-                  <th>Status</th>
-                  <th class="admin-only-header">Actions</th>
-                </tr>
-              </thead>
-              <tbody id="attendanceTableBody">
-                <!-- Loaded dynamically -->
-              </tbody>
-            </table>
-          </div>
-          
-          <!-- Empty State -->
-          <div class="empty-state-placeholder" id="emptyState" style="display: none;">
-            <div class="empty-state-icon">📭</div>
-            <h4>No Attendance Records Found</h4>
-            <p>Try refining your search terms or filter constraints.</p>
-          </div>
-        </div>
-
-      </section>
+      </div>
 
     </div>
+
+    <!-- FULL-WIDTH ATTENDANCE AUDIT LEDGER SECTION -->
+    <section class="panel-card glass-panel records-container full-width-records">
+      <div class="filters-header-bar">
+        <h3>📋 Attendance Records</h3>
+        
+        <div class="search-filters-group">
+          <input type="text" id="searchInput" oninput="applyFiltersAndSearch()" placeholder="Search student or subject...">
+          
+          <select id="statusFilter" onchange="applyFiltersAndSearch()">
+            <option value="">All Statuses</option>
+            <option value="Present">Present</option>
+            <option value="Absent">Absent</option>
+            <option value="Late">Late</option>
+          </select>
+
+          <select id="subjectFilter" onchange="applyFiltersAndSearch()">
+            <option value="">All Subjects</option>
+          </select>
+          
+          <button class="secondary-btn" style="padding: 10px 14px; font-size: 14px; margin: 0; display: inline-flex; align-items: center; gap: 6px;" onclick="exportToCSV()">📥 Export CSV</button>
+        </div>
+      </div>
+
+      <div class="table-responsive-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Student Name</th>
+              <th>Email</th>
+              <th>Subject</th>
+              <th>Status</th>
+              <th class="admin-only-header">Actions</th>
+            </tr>
+          </thead>
+          <tbody id="attendanceTableBody">
+            <!-- Loaded dynamically -->
+          </tbody>
+        </table>
+      </div>
+      
+      <!-- Empty State -->
+      <div class="empty-state-placeholder" id="emptyState" style="display: none;">
+        <div class="empty-state-icon">📭</div>
+        <h4>No Attendance Records Found</h4>
+        <p>Try refining your search terms or filter constraints.</p>
+      </div>
+    </section>
 
   </main>
 
