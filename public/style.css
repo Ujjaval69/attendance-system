@@ -1,77 +1,101 @@
 /* ==========================================================================
-   DESIGN SYSTEM - VARIABLES & ROOT (Default: Luxury Alabaster & Forest Green)
+   DESIGN SYSTEM - LUXURY TOKENS & TYPOGRAPHY (PHASE 1)
    ========================================================================== */
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
 
 :root {
   color-scheme: light;
-  /* Colors (Luxury Light Editorial Theme - High Contrast) */
-  --bg-primary: #ebe7dd; /* Rich Warm Alabaster Beige */
-  --bg-secondary: #ffffff;
-  --accent-primary: #1b4d3e; /* Forest Green */
-  --accent-primary-glow: rgba(27, 77, 62, 0.1);
-  --accent-secondary: #b59461; /* Champagne Gold */
-  --accent-secondary-glow: rgba(181, 148, 97, 0.1);
-  
-  --text-primary: #121c18; /* Deep Charcoal Green */
-  --text-secondary: #4a5751;
-  --text-muted: #83958c;
-  
-  --glass-bg: rgba(255, 255, 255, 0.94); /* Crisp opaque white cards */
-  --glass-border: rgba(27, 77, 62, 0.12);
-  --glass-shadow: rgba(27, 77, 62, 0.06);
-  
-  --card-glow-indigo: 0 14px 44px 0 rgba(27, 77, 62, 0.09);
-  --card-glow-cyan: 0 14px 44px 0 rgba(181, 148, 97, 0.09);
-  
-  /* Status Colors */
-  --status-present: #2d8a6b;
-  --status-present-bg: rgba(45, 138, 107, 0.1);
-  --status-absent: #b93c3c;
-  --status-absent-bg: rgba(185, 60, 60, 0.1);
-  --status-late: #c9883b;
-  --status-late-bg: rgba(201, 136, 59, 0.1);
-  
-  /* System */
-  --font-sans: 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-  --radius-lg: 24px;
-  --radius-md: 16px;
-  --radius-sm: 10px;
-  --transition-smooth: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-  --transition-bounce: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+
+  /* --- Colors: Warm Editorial Alabaster & Forest Slate --- */
+  --bg-canvas: #F8F7F4;                 /* Ambient non-glare editorial canvas */
+  --bg-surface: #FFFFFF;                /* Crisp card container */
+  --bg-surface-elevated: #FFFFFF;       /* Modals and popovers */
+  --bg-subtle: rgba(20, 26, 23, 0.035); /* Subtle input/hover fill */
+
+  /* Backwards-compatible aliases */
+  --bg-primary: var(--bg-canvas);
+  --bg-secondary: var(--bg-surface);
+
+  /* Primary Brand Accents */
+  --accent-primary: #1B4D3E;            /* Forest Emerald */
+  --accent-primary-glow: rgba(27, 77, 62, 0.08);
+  --accent-secondary: #B59461;          /* Muted Champagne Gold */
+  --accent-secondary-glow: rgba(181, 148, 97, 0.12);
+
+  /* High-Contrast Typographic Neutrals */
+  --text-primary: #141A17;              /* Deep charcoal forest - supreme contrast */
+  --text-secondary: #56615B;            /* Balanced secondary reading text */
+  --text-muted: #8E9993;                /* Muted metadata, timestamps & table labels */
+
+  /* Surface Depth & Edge Highlights */
+  --glass-bg: rgba(255, 255, 255, 0.94);
+  --glass-border: rgba(20, 26, 23, 0.08);
+  --glass-shadow: 0 1px 3px rgba(0, 0, 0, 0.02), 0 12px 32px -4px rgba(27, 77, 62, 0.05);
+
+  --card-glow-indigo: 0 8px 30px 0 rgba(27, 77, 62, 0.06);
+  --card-glow-cyan: 0 8px 30px 0 rgba(181, 148, 97, 0.06);
+
+  /* Refined Jewel-Toned Status Palette (Non-Garish) */
+  --status-present: #0D9488;            /* Deep Teal Emerald */
+  --status-present-bg: rgba(13, 148, 136, 0.08);
+  --status-absent: #E11D48;             /* Refined Crimson Rose */
+  --status-absent-bg: rgba(225, 29, 72, 0.08);
+  --status-late: #D97706;               /* Warm Burnished Amber */
+  --status-late-bg: rgba(217, 119, 6, 0.08);
+
+  /* Typography & Precision Geometry */
+  --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+
+  --radius-lg: 16px;
+  --radius-md: 10px;
+  --radius-sm: 6px;
+
+  /* Executive Spring Physics */
+  --ease-luxury: cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-fast: 160ms var(--ease-luxury);
+  --transition-smooth: all 0.28s var(--ease-luxury);
+  --transition-bounce: all 0.35s var(--ease-luxury);
 }
 
-/* Dark Mode Variables (Luxury Carbon & Sage Green - High Contrast) */
+/* --- Dark Mode Variables: Titanium Obsidian & Sage Gold --- */
 body.dark-mode {
   color-scheme: dark;
-  --bg-primary: #050507; /* Absolute Midnight Black */
-  --bg-secondary: #1a1a22; /* High-contrast Slate Carbon Card Background */
-  --accent-primary: #b59461; /* Gold */
+
+  --bg-canvas: #090A0C;                 /* Deep obsidian void */
+  --bg-surface: #121417;                /* Matte titanium card container */
+  --bg-surface-elevated: #181B1F;       /* Modals and elevated surfaces */
+  --bg-subtle: rgba(255, 255, 255, 0.04);
+
+  --bg-primary: var(--bg-canvas);
+  --bg-secondary: var(--bg-surface);
+
+  --accent-primary: #B59461;            /* Champagne Gold */
   --accent-primary-glow: rgba(181, 148, 97, 0.15);
-  --accent-secondary: #52b788; /* Sage Green */
-  --accent-secondary-glow: rgba(82, 183, 136, 0.15);
-  
-  --text-primary: #f9fafb; /* Clear readable off-white */
-  --text-secondary: #a1a8b5;
-  --text-muted: #626a78;
-  
-  --glass-bg: rgba(26, 26, 34, 0.9); /* Opaque slate card backgrounds */
-  --glass-border: rgba(255, 255, 255, 0.08);
-  --glass-shadow: rgba(0, 0, 0, 0.65);
-  
-  --card-glow-indigo: 0 10px 36px 0 rgba(181, 148, 97, 0.12);
-  --card-glow-cyan: 0 10px 36px 0 rgba(82, 183, 136, 0.12);
-  
-  --status-present: #52b788;
-  --status-present-bg: rgba(82, 183, 136, 0.15);
-  --status-absent: #f87171;
-  --status-absent-bg: rgba(248, 113, 113, 0.15);
-  --status-late: #fbbf24;
-  --status-late-bg: rgba(251, 191, 36, 0.15);
+  --accent-secondary: #34D399;          /* Sage Emerald */
+  --accent-secondary-glow: rgba(52, 211, 153, 0.15);
+
+  --text-primary: #F2F4F7;              /* Clean off-white */
+  --text-secondary: #949DA8;            /* Neutral reading gray */
+  --text-muted: #5E6773;                /* Muted tabular secondary labels */
+
+  --glass-bg: rgba(18, 20, 23, 0.92);
+  --glass-border: rgba(255, 255, 255, 0.07);
+  --glass-shadow: 0 12px 36px -4px rgba(0, 0, 0, 0.7);
+
+  --card-glow-indigo: 0 10px 36px 0 rgba(181, 148, 97, 0.08);
+  --card-glow-cyan: 0 10px 36px 0 rgba(52, 211, 153, 0.08);
+
+  --status-present: #34D399;
+  --status-present-bg: rgba(52, 211, 153, 0.12);
+  --status-absent: #FB7185;
+  --status-absent-bg: rgba(251, 113, 133, 0.12);
+  --status-late: #FBBF24;
+  --status-late-bg: rgba(251, 191, 36, 0.12);
 }
 
 /* ==========================================================================
-   GLOBAL RESET & STYLES
+   GLOBAL RESET & BASE STYLES
    ========================================================================== */
 * {
   box-sizing: border-box;
@@ -82,21 +106,31 @@ body.dark-mode {
 body {
   background-color: var(--bg-primary);
   background-image: 
-    radial-gradient(circle at 0% 0%, var(--accent-primary-glow) 0%, transparent 50%),
-    radial-gradient(circle at 100% 100%, var(--accent-secondary-glow) 0%, transparent 50%);
+    radial-gradient(circle at 0% 0%, var(--accent-primary-glow) 0%, transparent 45%),
+    radial-gradient(circle at 100% 100%, var(--accent-secondary-glow) 0%, transparent 45%);
   background-attachment: fixed;
   color: var(--text-primary);
   font-family: var(--font-sans);
   min-height: 100vh;
   overflow-x: hidden;
   position: relative;
-  transition: background-color 0.4s ease, color 0.4s ease;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  transition: background-color 0.35s ease, color 0.35s ease;
+}
+
+/* Typography Utility Classes */
+.font-mono {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums lining-nums;
+  letter-spacing: -0.02em;
 }
 
 /* Custom Scrollbar */
 ::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+  width: 7px;
+  height: 7px;
 }
 ::-webkit-scrollbar-track {
   background: transparent;
@@ -110,7 +144,7 @@ body {
 }
 
 /* ==========================================================================
-   COMMON GLASS COMPONENTS
+   ELEVATED CARDS & SURFACES
    ========================================================================== */
 .glass-panel {
   background: var(--glass-bg);
@@ -118,31 +152,35 @@ body {
   -webkit-backdrop-filter: blur(16px);
   border: 1px solid var(--glass-border);
   border-radius: var(--radius-lg);
-  box-shadow: 0 8px 32px 0 var(--glass-shadow);
-  transition: transform 0.15s ease-out, box-shadow 0.3s ease, background-color 0.4s ease;
-  transform-style: preserve-3d;
+  box-shadow: var(--glass-shadow);
+  transition: transform 0.2s var(--ease-luxury), box-shadow 0.28s var(--ease-luxury), background-color 0.35s ease;
   will-change: transform;
+}
+
+body.dark-mode .glass-panel {
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.07), var(--glass-shadow);
 }
 
 /* Form Controls */
 input, select {
   font-family: var(--font-sans);
   width: 100%;
-  padding: 14px 18px;
-  margin: 10px 0;
+  padding: 13px 16px;
+  margin: 8px 0;
   border-radius: var(--radius-md);
   border: 1px solid var(--glass-border);
-  background: rgba(0, 0, 0, 0.03);
+  background: var(--bg-subtle);
   color: var(--text-primary);
-  font-size: 15px;
+  font-size: 14.5px;
   font-weight: 400;
   outline: none;
-  transition: var(--transition-smooth);
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast), background-color var(--transition-fast);
 }
 
 select option {
-  background-color: var(--bg-secondary);
+  background-color: var(--bg-surface-elevated);
   color: var(--text-primary);
+  padding: 8px 12px;
 }
 
 input::placeholder {
@@ -150,128 +188,132 @@ input::placeholder {
   opacity: 0.75;
 }
 
-body.dark-mode input, body.dark-mode select {
-  background: rgba(255, 255, 255, 0.05);
-}
-
 input:focus, select:focus {
   border-color: var(--accent-primary);
-  box-shadow: 0 0 0 3px var(--accent-primary-glow);
-  background: #ffffff;
+  box-shadow: 0 0 0 1px var(--accent-primary), 0 0 0 4px var(--accent-primary-glow);
+  background: var(--bg-surface);
 }
 
 body.dark-mode input:focus, body.dark-mode select:focus {
-  background: rgba(255, 255, 255, 0.08);
+  background: var(--bg-surface-elevated);
 }
 
 label {
   display: block;
-  font-size: 14px;
-  font-weight: 500;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
   color: var(--text-secondary);
-  margin-top: 15px;
+  margin-top: 14px;
   text-align: left;
 }
 
 /* Buttons */
 button {
   font-family: var(--font-sans);
-  padding: 13px 24px;
+  padding: 12px 22px;
   border-radius: var(--radius-md);
   border: none;
   background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
   color: #ffffff;
   font-weight: 600;
-  font-size: 15px;
+  font-size: 14.5px;
+  letter-spacing: -0.01em;
   cursor: pointer;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
-  box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
-  transition: var(--transition-bounce);
+  box-shadow: 0 2px 8px -1px var(--accent-primary-glow), 0 4px 16px -2px var(--accent-primary-glow);
+  transition: transform var(--transition-fast), box-shadow 0.25s var(--ease-luxury), filter var(--transition-fast);
 }
 
 button:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px var(--accent-primary-glow);
+  transform: translateY(-1.5px);
+  filter: brightness(1.04);
 }
 
 button:active {
-  transform: translateY(1px);
+  transform: scale(0.98);
 }
 
 button.secondary-btn {
-  background: rgba(0, 0, 0, 0.05);
+  background: var(--bg-subtle);
   border: 1px solid var(--glass-border);
   color: var(--text-primary);
   box-shadow: none;
+  font-weight: 500;
 }
 
 button.secondary-btn:hover {
-  background: rgba(0, 0, 0, 0.09);
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-}
-
-body.dark-mode button.secondary-btn {
-  background: rgba(255, 255, 255, 0.08);
+  background: rgba(20, 26, 23, 0.07);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
 }
 
 body.dark-mode button.secondary-btn:hover {
-  background: rgba(255, 255, 255, 0.15);
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+  background: rgba(255, 255, 255, 0.08);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
 
 button.danger-btn {
-  background: rgba(239, 68, 68, 0.15);
-  border: 1px solid rgba(239, 68, 68, 0.3);
-  color: #ef4444;
-  padding: 8px 12px;
+  background: var(--status-absent-bg);
+  border: 1px solid rgba(225, 29, 72, 0.25);
+  color: var(--status-absent);
+  padding: 7px 12px;
   border-radius: var(--radius-sm);
   box-shadow: none;
-  font-size: 13px;
+  font-size: 12.5px;
+  font-weight: 600;
 }
 
 button.danger-btn:hover {
-  background: #ef4444;
+  background: var(--status-absent);
   color: #ffffff;
-  box-shadow: 0 4px 15px rgba(239, 68, 68, 0.3);
+  box-shadow: 0 2px 10px rgba(225, 29, 72, 0.3);
 }
 
 /* Badges */
 .badge {
   display: inline-flex;
   align-items: center;
-  padding: 6px 12px;
+  gap: 5px;
+  padding: 4px 10px;
   border-radius: 9999px;
   font-size: 12px;
   font-weight: 600;
   text-transform: capitalize;
+  letter-spacing: -0.01em;
 }
 
 .badge.admin {
   background: var(--accent-primary-glow);
   color: var(--accent-primary);
+  border: 1px solid var(--accent-primary-glow);
 }
 
 .badge.student {
   background: var(--accent-secondary-glow);
   color: var(--accent-secondary);
+  border: 1px solid var(--accent-secondary-glow);
 }
 
 .badge.status-present {
   background: var(--status-present-bg);
   color: var(--status-present);
+  border: 1px solid rgba(13, 148, 136, 0.15);
 }
 
 .badge.status-absent {
   background: var(--status-absent-bg);
   color: var(--status-absent);
+  border: 1px solid rgba(225, 29, 72, 0.15);
 }
 
 .badge.status-late {
   background: var(--status-late-bg);
   color: var(--status-late);
+  border: 1px solid rgba(217, 119, 6, 0.15);
 }
 
 /* ==========================================================================
@@ -547,17 +589,20 @@ body.dark-mode .theme-toggle-btn:hover {
 }
 
 .stat-details h4 {
-  font-size: 14px;
+  font-size: 11px;
   text-transform: uppercase;
-  color: var(--text-secondary);
-  letter-spacing: 0.5px;
+  color: var(--text-muted);
+  letter-spacing: 0.08em;
   font-weight: 600;
-  margin-bottom: 8px;
+  margin-bottom: 6px;
 }
 
 .stat-details .value {
-  font-size: 32px;
-  font-weight: 800;
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums lining-nums;
+  font-size: 34px;
+  font-weight: 700;
+  letter-spacing: -0.03em;
   color: var(--text-primary);
 }
 
@@ -725,22 +770,22 @@ table {
 
 th, td {
   padding: 16px 20px;
-  font-size: 14px;
 }
 
 th {
   font-weight: 600;
-  color: var(--text-secondary);
-  border-bottom: 2px solid var(--glass-border);
+  color: var(--text-muted);
+  border-bottom: 1px solid var(--glass-border);
   text-transform: uppercase;
-  font-size: 12px;
-  letter-spacing: 0.5px;
+  font-size: 11px;
+  letter-spacing: 0.08em;
 }
 
 td {
   border-bottom: 1px solid var(--glass-border);
   color: var(--text-primary);
   font-weight: 500;
+  font-size: 14px;
 }
 
 tr {

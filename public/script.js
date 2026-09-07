@@ -684,15 +684,15 @@ function toggleTheme() {
 // ================= ANALYTICS CHARTS (CHART.JS) =================
 function renderCharts(records) {
   const isDark = document.body.classList.contains("dark-mode");
-  const textColor = isDark ? "#9ca3af" : "#5a6660";
-  const gridColor = isDark ? "rgba(255, 255, 255, 0.05)" : "rgba(27, 77, 62, 0.08)";
+  const textColor = isDark ? "#949DA8" : "#56615B";
+  const gridColor = isDark ? "rgba(255, 255, 255, 0.05)" : "rgba(20, 26, 23, 0.06)";
   
-  const presentColor = isDark ? "#52b788" : "#2d8a6b";
-  const absentColor = isDark ? "#f87171" : "#b93c3c";
-  const lateColor = isDark ? "#fbbf24" : "#c9883b";
-  const elementBg = isDark ? "#131317" : "#ffffff";
+  const presentColor = isDark ? "#34D399" : "#0D9488";
+  const absentColor = isDark ? "#FB7185" : "#E11D48";
+  const lateColor = isDark ? "#FBBF24" : "#D97706";
+  const elementBg = isDark ? "#121417" : "#FFFFFF";
   
-  const accentColor = isDark ? "#b59461" : "#1b4d3e";
+  const accentColor = isDark ? "#B59461" : "#1B4D3E";
   const accentGlow = isDark ? "rgba(181, 148, 97, 0.75)" : "rgba(27, 77, 62, 0.75)";
 
   // --- Chart 1: Ratio Doughnut Chart ---
@@ -721,7 +721,7 @@ function renderCharts(records) {
         plugins: {
           legend: {
             position: "bottom",
-            labels: { color: textColor, font: { family: "Outfit", size: 12 } }
+            labels: { color: textColor, font: { family: "'Plus Jakarta Sans', sans-serif", size: 12, weight: 500 } }
           }
         }
       }
@@ -764,7 +764,7 @@ function renderCharts(records) {
         scales: {
           x: {
             grid: { display: false },
-            ticks: { color: textColor, font: { family: "Outfit" } }
+            ticks: { color: textColor, font: { family: "'Plus Jakarta Sans', sans-serif", size: 12 } }
           },
           y: {
             min: 0,
@@ -772,7 +772,7 @@ function renderCharts(records) {
             grid: { color: gridColor },
             ticks: { 
               color: textColor, 
-              font: { family: "Outfit" },
+              font: { family: "'JetBrains Mono', monospace", size: 11 },
               callback: value => `${value}%`
             }
           }
