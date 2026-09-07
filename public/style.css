@@ -904,6 +904,7 @@ body.dark-mode .stat-icon-wrapper {
 
 .panel-card {
   padding: 28px;
+  transform: none !important;
 }
 
 .panel-card h3 {

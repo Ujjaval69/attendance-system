@@ -74,7 +74,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Load attendance data
   loadAttendance();
-  init3DTilt();
 });
 
 // ================= TOAST NOTIFICATION CONTROLLER =================
@@ -981,28 +980,7 @@ async function quickDemoLogin(targetRole) {
   }
 }
 
-// INITIALIZE 3D HOVER TILT EFFECTS ON DASHBOARD CARDS
+// 3D HOVER TILT EFFECTS (Disabled on dashboard cards for rock-solid stability and readability)
 function init3DTilt() {
-  const cards = document.querySelectorAll(".panel-card.glass-panel, .stat-card.glass-panel, .chart-card.glass-panel");
-  
-  cards.forEach(card => {
-    card.addEventListener("mousemove", (e) => {
-      const rect = card.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
-      
-      const centerX = rect.width / 2;
-      const centerY = rect.height / 2;
-      
-      // Compute subtle rotation angles (max 6deg)
-      const rotateX = ((centerY - y) / centerY) * 6;
-      const rotateY = ((x - centerX) / centerX) * 6;
-      
-      card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.015, 1.015, 1.015)`;
-    });
-    
-    card.addEventListener("mouseleave", () => {
-      card.style.transform = "perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)";
-    });
-  });
+  // Flat, stable luxury layout - 3D perspective rotation intentionally disabled
 }
