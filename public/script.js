@@ -328,20 +328,38 @@ function renderAttendanceTable(records) {
     // Create Badge style class
     const badgeClass = `status-${record.status.toLowerCase()}`;
 
-    // Admin Action Buttons
+    // Admin Action Buttons with luxury SVG icons
     const actionsHtml = role === "admin" 
       ? `<div class="action-buttons-cell">
-          <button class="secondary-btn" style="padding: 6px 12px; font-size: 13px;" onclick="openEditModal('${record._id}', '${record.studentName}', '${record.subject}', '${record.status}')">✏️</button>
-          <button class="danger-btn" onclick="deleteAttendance('${record._id}')">✖</button>
+          <button class="action-btn-pill action-btn-edit" title="Edit status" onclick="openEditModal('${record._id}', '${record.studentName}', '${record.subject}', '${record.status}')">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+            <span>Edit</span>
+          </button>
+          <button class="action-btn-pill action-btn-delete" title="Delete record" onclick="deleteAttendance('${record._id}')">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+          </button>
          </div>`
       : "";
 
     tr.innerHTML = `
-      <td>${formattedDate}</td>
-      <td><strong>${record.studentName}</strong></td>
-      <td>${record.studentEmail}</td>
-      <td>${record.subject}</td>
-      <td><span class="badge ${badgeClass}">${record.status}</span></td>
+      <td class="cell-date"><span class="date-badge">${formattedDate}</span></td>
+      <td>
+        <div class="student-cell">
+          <span class="student-cell-avatar">${(record.studentName || "S").charAt(0).toUpperCase()}</span>
+          <div class="student-cell-info">
+            <span class="student-cell-name">${record.studentName}</span>
+            <span class="student-cell-email-sub">${record.studentEmail}</span>
+          </div>
+        </div>
+      </td>
+      <td class="cell-email"><span class="mono-email">${record.studentEmail}</span></td>
+      <td class="cell-subject"><span class="subject-pill">${record.subject}</span></td>
+      <td>
+        <span class="badge ${badgeClass}">
+          <span class="badge-dot"></span>
+          ${record.status}
+        </span>
+      </td>
       ${role === "admin" ? `<td>${actionsHtml}</td>` : ""}
     `;
 
@@ -438,20 +456,28 @@ function calculateStatistics(records) {
 
       if (atRisk.length === 0) {
         riskStudentsListEl.innerHTML = `
-          <div style="background: var(--status-present-bg); color: var(--status-present); padding: 12px; border-radius: var(--radius-sm); font-size: 13px; font-weight: 600; text-align: center;">
-            ✓ All students meet 75% target
+          <div class="risk-clear-card">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+            <div>
+              <div style="font-weight: 600;">Optimal Academic Attendance</div>
+              <div style="font-size: 11px; opacity: 0.85; margin-top: 2px;">All registered students meet the 75% target</div>
+            </div>
           </div>
         `;
       } else {
         let riskHtml = '';
         atRisk.sort((a, b) => parseFloat(a.rate) - parseFloat(b.rate)).forEach(item => {
           riskHtml += `
-            <div style="display: flex; flex-direction: column; gap: 4px; padding: 10px; background: rgba(239, 68, 68, 0.08); border: 1px solid rgba(239, 68, 68, 0.15); border-radius: var(--radius-sm);">
-              <div style="display: flex; justify-content: space-between; font-size: 13px; font-weight: 600;">
-                <span style="color: var(--text-primary); font-weight: 700;">${item.name}</span>
-                <span style="color: var(--status-absent); font-weight: 800;">${item.rate}%</span>
+            <div class="risk-student-card">
+              <div class="risk-student-avatar">${(item.name || "S").charAt(0).toUpperCase()}</div>
+              <div class="risk-student-info">
+                <span class="risk-student-name">${item.name}</span>
+                <span class="risk-student-email">${item.email}</span>
               </div>
-              <span style="font-size: 11px; color: var(--text-muted);">${item.email}</span>
+              <div class="risk-rate-pill">
+                <span class="risk-rate-value">${item.rate}%</span>
+                <span class="risk-rate-label">Rate</span>
+              </div>
             </div>
           `;
         });

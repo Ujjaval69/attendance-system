@@ -163,11 +163,11 @@
             <div class="attendance-grid-wrapper" id="heatmapGridWrapper">
               <!-- Loaded dynamically -->
             </div>
-            <div style="display: flex; gap: 10px; font-size: 10px; color: var(--text-muted); justify-content: center; margin-top: 8px; flex-wrap: wrap;">
-              <span style="display: flex; align-items: center; gap: 4px;"><span style="width: 8px; height: 8px; background: var(--status-present); border-radius: 2px;"></span> P</span>
-              <span style="display: flex; align-items: center; gap: 4px;"><span style="width: 8px; height: 8px; background: var(--status-absent); border-radius: 2px;"></span> A</span>
-              <span style="display: flex; align-items: center; gap: 4px;"><span style="width: 8px; height: 8px; background: var(--status-late); border-radius: 2px;"></span> L</span>
-              <span style="display: flex; align-items: center; gap: 4px;"><span style="width: 8px; height: 8px; background: rgba(255, 255, 255, 0.05); border-radius: 2px; border: 1px solid var(--glass-border);"></span> Off</span>
+            <div class="heatmap-legend">
+              <span class="legend-pill"><span class="legend-dot present"></span> Present</span>
+              <span class="legend-pill"><span class="legend-dot absent"></span> Absent</span>
+              <span class="legend-pill"><span class="legend-dot late"></span> Late</span>
+              <span class="legend-pill"><span class="legend-dot off"></span> No Record</span>
             </div>
           </div>
         </div>
@@ -179,10 +179,16 @@
     <!-- FULL-WIDTH ATTENDANCE AUDIT LEDGER SECTION -->
     <section class="panel-card glass-panel records-container full-width-records">
       <div class="filters-header-bar">
-        <h3>📋 Attendance Records</h3>
+        <div class="filters-title-group">
+          <h3>📋 Attendance Ledger</h3>
+          <span class="ledger-subtitle">Verified institutional attendance records</span>
+        </div>
         
         <div class="search-filters-group">
-          <input type="text" id="searchInput" oninput="applyFiltersAndSearch()" placeholder="Search student or subject...">
+          <div class="search-input-wrapper">
+            <svg class="search-input-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            <input type="text" id="searchInput" oninput="applyFiltersAndSearch()" placeholder="Search student or subject...">
+          </div>
           
           <select id="statusFilter" onchange="applyFiltersAndSearch()">
             <option value="">All Statuses</option>
@@ -195,7 +201,10 @@
             <option value="">All Subjects</option>
           </select>
           
-          <button class="secondary-btn" style="padding: 10px 14px; font-size: 14px; margin: 0; display: inline-flex; align-items: center; gap: 6px;" onclick="exportToCSV()">📥 Export CSV</button>
+          <button class="secondary-btn export-btn" onclick="exportToCSV()">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+            <span>Export CSV</span>
+          </button>
         </div>
       </div>
 
@@ -204,8 +213,8 @@
           <thead>
             <tr>
               <th>Date</th>
-              <th>Student Name</th>
-              <th>Email</th>
+              <th>Student</th>
+              <th class="col-email">Email</th>
               <th>Subject</th>
               <th>Status</th>
               <th class="admin-only-header">Actions</th>
